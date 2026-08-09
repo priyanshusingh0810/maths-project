@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Binary, CircleDot, Compass, Shuffle, Layers, Activity, CheckCircle } from 'lucide-react';
+import { ArrowRight, Binary, CircleDot, Compass, Shuffle, Layers, Activity, Sparkles, Zap, BookOpen, BarChart3, Eye, CheckCircle } from 'lucide-react';
 
 interface HomeProps {
   setActivePage: (page: string) => void;
@@ -7,10 +7,6 @@ interface HomeProps {
 }
 
 export const Home: React.FC<HomeProps> = ({ setActivePage, setUnitFilter }) => {
-  const exploreModule = (moduleId: string) => {
-    setActivePage(moduleId);
-  };
-
   const exploreAllModules = () => {
     setUnitFilter('all');
     setActivePage('dashboard');
@@ -20,236 +16,409 @@ export const Home: React.FC<HomeProps> = ({ setActivePage, setUnitFilter }) => {
     {
       id: 'gcd',
       name: 'GCD Calculator',
-      desc: 'Euclidean Algorithm division visualizer with complete step-by-step remainder breakdown.',
+      desc: 'Euclidean Algorithm visualizer with step-by-step division breakdown.',
       unit: 'Unit I',
       tag: 'Number Theory',
       icon: Binary,
-      color: 'from-blue-500 to-indigo-500',
+      gradient: 'linear-gradient(135deg, #3B82F6, #6C63FF)',
+      glow: 'rgba(108,99,255,0.3)',
+      pillClass: 'neon-pill-indigo',
     },
     {
       id: 'congruence',
       name: 'Congruence Calculator',
-      desc: 'Evaluate a ≡ b (mod m) with interactive remainder circle / clock-dial modular representations.',
+      desc: 'Evaluate a ≡ b (mod m) with an interactive modular clock-dial visualizer.',
       unit: 'Unit I',
       tag: 'Modular Arithmetic',
       icon: CircleDot,
-      color: 'from-indigo-500 to-purple-500',
+      gradient: 'linear-gradient(135deg, #6C63FF, #A855F7)',
+      glow: 'rgba(168,85,247,0.3)',
+      pillClass: 'neon-pill-purple',
     },
     {
       id: 'complex',
       name: 'Complex Number Explorer',
-      desc: 'Perform vector additions, arithmetic, and cartesian-polar translations on an interactive complex plane.',
+      desc: 'Arithmetic & Cartesian-polar translations on an interactive complex plane.',
       unit: 'Unit I',
       tag: 'Algebra',
       icon: Compass,
-      color: 'from-purple-500 to-pink-500',
+      gradient: 'linear-gradient(135deg, #A855F7, #EC4899)',
+      glow: 'rgba(236,72,153,0.3)',
+      pillClass: 'neon-pill-rose',
     },
     {
       id: 'permutation',
       name: 'Permutation Calculator',
-      desc: 'Determine permutations where order matters, displaying step-by-step factorial expansions and slots.',
+      desc: 'Determine nPr with step-by-step factorial expansions and slot animations.',
       unit: 'Unit II',
       tag: 'Combinatorics',
       icon: Shuffle,
-      color: 'from-teal-500 to-emerald-500',
+      gradient: 'linear-gradient(135deg, #14B8A6, #10B981)',
+      glow: 'rgba(16,185,129,0.3)',
+      pillClass: 'neon-pill-teal',
     },
     {
       id: 'combination',
       name: 'Combination Calculator',
-      desc: 'Calculate combinations where order does not matter, and compare outcomes directly with nPr.',
+      desc: 'Calculate nCr where order doesn\'t matter and compare outcomes vs. nPr.',
       unit: 'Unit II',
       tag: 'Combinatorics',
       icon: Layers,
-      color: 'from-emerald-500 to-green-500',
+      gradient: 'linear-gradient(135deg, #10B981, #06B6D4)',
+      glow: 'rgba(6,182,212,0.3)',
+      pillClass: 'neon-pill-emerald',
     },
     {
       id: 'limit',
       name: 'Limit Calculator',
-      desc: 'Compute left/right/two-sided limits using SymPy symbolic mathematics and an animated approaching graph.',
+      desc: 'Compute left/right/two-sided limits via SymPy with an animated graph.',
       unit: 'Unit II',
       tag: 'Calculus',
       icon: Activity,
-      color: 'from-rose-500 to-orange-500',
+      gradient: 'linear-gradient(135deg, #F59E0B, #EF4444)',
+      glow: 'rgba(239,68,68,0.3)',
+      pillClass: 'neon-pill-amber',
     },
   ];
 
+  const features = [
+    {
+      icon: Zap,
+      title: 'Interactive Learning',
+      desc: 'Adjust parameters dynamically and observe real-time computational responses.',
+      color: '#6C63FF',
+    },
+    {
+      icon: BookOpen,
+      title: 'Step-by-Step Solutions',
+      desc: 'Every algebraic substitution, division, and simplification explained clearly.',
+      color: '#A855F7',
+    },
+    {
+      icon: Eye,
+      title: 'Visual Understanding',
+      desc: 'Modular wheels, complex planes, combinatoric grids — geometry made tangible.',
+      color: '#EC4899',
+    },
+    {
+      icon: BarChart3,
+      title: 'Real-Life Context',
+      desc: 'Number theory, cryptography, signal processing, and ML gradients explained.',
+      color: '#10B981',
+    },
+    {
+      icon: CheckCircle,
+      title: 'Error-Free Validation',
+      desc: 'Catches invalid entries instantly — negative modulus, zero denominators, and more.',
+      color: '#06B6D4',
+    },
+    {
+      icon: Sparkles,
+      title: 'Report-Ready Displays',
+      desc: 'Clean KaTeX-rendered formulas designed for sharp academic report screenshots.',
+      color: '#F59E0B',
+    },
+  ];
+
+  // Floating math particles
+  const particles = ['∑', 'π', '∞', '∫', 'Δ', '√', 'λ', '∂', 'φ', 'θ', 'ε', 'σ'];
+
   return (
-    <div className="space-y-16 py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Hero Section */}
-      <div className="text-center max-w-4xl mx-auto space-y-6 pt-10">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900 text-indigo-700 dark:text-indigo-300 text-xs font-bold uppercase tracking-wider">
-          Smt. CHM College (Autonomous) &bull; T.Y.B.Sc. Data Science
-        </div>
-        
-        <h1 className="text-4xl sm:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-none">
-          Math in Action <br />
-          <span className="bg-gradient-to-r from-indigo-650 via-purple-600 to-pink-500 bg-clip-text text-transparent">
-            Interactive Mathematics Explorer
+    <div className="relative overflow-hidden">
+
+      {/* Floating Math Particles */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+        {particles.map((sym, i) => (
+          <span
+            key={i}
+            className="math-particle"
+            style={{
+              left: `${(i * 8.5 + 3) % 100}%`,
+              top: `${(i * 11 + 5) % 80}%`,
+              fontSize: `${24 + (i % 4) * 16}px`,
+              animationDuration: `${8 + (i % 5) * 3}s`,
+              animationDelay: `${i * 0.7}s`,
+            }}
+          >
+            {sym}
           </span>
-        </h1>
-
-        <p className="text-base sm:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-          Explore mathematical concepts through calculations, step-by-step solutions, interactive visualizations, and real-world applications.
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-          <button
-            onClick={exploreAllModules}
-            className="w-full sm:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/35 transform hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer"
-          >
-            Explore Modules
-            <ArrowRight className="w-5 h-5" />
-          </button>
-          <button
-            onClick={() => setActivePage('concepts')}
-            className="w-full sm:w-auto px-8 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-850 rounded-xl font-bold transition-all shadow-sm hover:shadow cursor-pointer"
-          >
-            Review Concepts
-          </button>
-        </div>
+        ))}
       </div>
 
-      {/* Six Modules Grid */}
-      <div className="space-y-8">
-        <div className="text-center space-y-2">
-          <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white">
-            Core Modules
+      {/* ── HERO SECTION ── */}
+      <section className="hero-gradient relative pt-20 pb-28 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto text-center space-y-8">
+
+          {/* Badge */}
+          <div
+            className="animate-fade-up inline-flex items-center gap-2 neon-pill neon-pill-indigo"
+            style={{ fontSize: '11px' }}
+          >
+            <Sparkles className="w-3 h-3" />
+            Smt. CHM College (Autonomous) · T.Y.B.Sc. Data Science
+          </div>
+
+          {/* Headline */}
+          <h1
+            className="animate-fade-up delay-100 section-heading leading-none tracking-tight"
+            style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)' }}
+          >
+            <span style={{ color: 'rgba(241,245,249,0.95)' }}>
+              Math in Action
+            </span>
+            <br />
+            <span className="gradient-text">
+              Interactive Mathematics Explorer
+            </span>
+          </h1>
+
+          {/* Subtitle */}
+          <p
+            className="animate-fade-up delay-200 text-base sm:text-xl leading-relaxed max-w-2xl mx-auto"
+            style={{ color: 'rgba(148,163,184,0.85)' }}
+          >
+            Explore 6 mathematical concepts through calculations, step-by-step solutions,
+            interactive visualizations, and real-world applications.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="animate-fade-up delay-300 flex flex-col sm:flex-row gap-4 justify-center items-center pt-2">
+            <button
+              onClick={exploreAllModules}
+              className="btn-glow w-full sm:w-auto flex items-center justify-center gap-2 text-base"
+              id="cta-explore"
+            >
+              <Sparkles className="w-4 h-4" />
+              Explore Modules
+              <ArrowRight className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => setActivePage('concepts')}
+              className="btn-outline-glow w-full sm:w-auto flex items-center justify-center gap-2 text-base"
+              id="cta-concepts"
+            >
+              <BookOpen className="w-4 h-4" />
+              Review Concepts
+            </button>
+          </div>
+
+          {/* Stats Row */}
+          <div
+            className="animate-fade-up delay-400 flex flex-wrap justify-center gap-8 pt-6"
+            style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
+          >
+            {[
+              { label: 'Syllabus Units', value: '2' },
+              { label: 'Math Modules', value: '6' },
+              { label: 'Visualizations', value: '6' },
+              { label: 'Learning Steps', value: '∞' },
+            ].map((s, i) => (
+              <div key={i} className="text-center">
+                <div
+                  className="section-heading text-3xl font-black gradient-text-static"
+                >
+                  {s.value}
+                </div>
+                <div className="text-xs mt-1" style={{ color: 'rgba(100,116,139,0.8)' }}>
+                  {s.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── MODULE GRID ── */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="text-center space-y-3 mb-14 animate-fade-up">
+          <span className="neon-pill neon-pill-purple">Core Modules</span>
+          <h2
+            className="section-heading text-4xl font-extrabold mt-3"
+            style={{ color: 'rgba(241,245,249,0.95)' }}
+          >
+            Choose Your Calculator
           </h2>
-          <p className="text-slate-655 dark:text-slate-400 text-sm max-w-xl mx-auto">
-            Select one of the topics below to open its calculator, step-by-step solver, and interactive visualizer.
+          <p className="text-sm max-w-lg mx-auto" style={{ color: 'rgba(100,116,139,0.9)' }}>
+            Select a topic to open its calculator, step-by-step solver, and interactive visualizer.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {modules.map((mod) => {
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {modules.map((mod, idx) => {
             const IconComponent = mod.icon;
             return (
               <div
                 key={mod.id}
-                className="bg-white dark:bg-slate-900 border border-slate-250/70 dark:border-slate-800/80 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300 flex flex-col justify-between group"
+                className={`glass-card animate-fade-up delay-${Math.min((idx + 1) * 100, 600)} flex flex-col`}
+                style={{ padding: '28px', minHeight: '260px' }}
               >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
-                      {mod.unit}
-                    </span>
-                    <span className="text-xs font-semibold text-indigo-500 dark:text-indigo-400">
-                      {mod.tag}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className={`w-11 h-11 bg-gradient-to-tr ${mod.color} rounded-2xl flex items-center justify-center text-white shadow-md`}>
-                      <IconComponent className="w-6 h-6" />
-                    </div>
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-indigo-500 transition-colors">
-                      {mod.name}
-                    </h3>
-                  </div>
-
-                  <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
-                    {mod.desc}
-                  </p>
+                {/* Header row */}
+                <div className="flex items-center justify-between mb-5">
+                  <span className={`neon-pill ${mod.pillClass} text-[10px]`}>{mod.unit}</span>
+                  <span
+                    className="text-[10px] font-bold uppercase tracking-widest"
+                    style={{ color: 'rgba(100,116,139,0.8)' }}
+                  >
+                    {mod.tag}
+                  </span>
                 </div>
 
-                <button
-                  onClick={() => exploreModule(mod.id)}
-                  className="w-full py-3 bg-slate-50 dark:bg-slate-850 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 text-slate-800 dark:text-slate-200 hover:text-indigo-650 dark:hover:text-indigo-400 rounded-2xl font-bold border border-slate-200 dark:border-slate-800 hover:border-indigo-200 dark:hover:border-indigo-900 transition-all duration-200 flex items-center justify-center gap-2 group/btn cursor-pointer"
+                {/* Icon + Name */}
+                <div className="flex items-center gap-4 mb-4">
+                  <div
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center icon-glow shrink-0"
+                    style={{
+                      background: mod.gradient,
+                      boxShadow: `0 8px 24px ${mod.glow}`,
+                    }}
+                  >
+                    <IconComponent className="w-6 h-6 text-white" />
+                  </div>
+                  <h3
+                    className="font-bold text-lg leading-tight"
+                    style={{ color: 'rgba(241,245,249,0.95)', fontFamily: "'Outfit', sans-serif" }}
+                  >
+                    {mod.name}
+                  </h3>
+                </div>
+
+                {/* Description */}
+                <p
+                  className="text-sm leading-relaxed flex-1 mb-6"
+                  style={{ color: 'rgba(100,116,139,0.9)' }}
                 >
-                  Explore Module
-                  <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                  {mod.desc}
+                </p>
+
+                {/* CTA Button */}
+                <button
+                  onClick={() => setActivePage(mod.id)}
+                  id={`module-btn-${mod.id}`}
+                  className="w-full py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-200 group"
+                  style={{
+                    background: 'rgba(108,99,255,0.1)',
+                    border: '1px solid rgba(108,99,255,0.25)',
+                    color: '#a5b4fc',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={e => {
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.background = 'linear-gradient(135deg, rgba(108,99,255,0.3), rgba(168,85,247,0.2))';
+                    el.style.borderColor = 'rgba(108,99,255,0.5)';
+                    el.style.color = 'white';
+                    el.style.boxShadow = `0 8px 24px ${mod.glow}`;
+                  }}
+                  onMouseLeave={e => {
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.background = 'rgba(108,99,255,0.1)';
+                    el.style.borderColor = 'rgba(108,99,255,0.25)';
+                    el.style.color = '#a5b4fc';
+                    el.style.boxShadow = 'none';
+                  }}
+                >
+                  Open Calculator
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
             );
           })}
         </div>
-      </div>
+      </section>
 
-      {/* Why This Application Section */}
-      <div className="bg-slate-100/50 dark:bg-slate-900/20 border border-slate-200/50 dark:border-slate-800/40 rounded-3xl p-8 sm:p-12 space-y-8">
-        <div className="text-center space-y-2">
-          <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white">
-            Why This Application?
+      {/* ── FEATURES SECTION ── */}
+      <section
+        className="py-20 px-4 sm:px-6 lg:px-8"
+        style={{
+          background: 'rgba(6,9,20,0.6)',
+          borderTop: '1px solid rgba(255,255,255,0.04)',
+          borderBottom: '1px solid rgba(255,255,255,0.04)',
+        }}
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center space-y-3 mb-14 animate-fade-up">
+            <span className="neon-pill neon-pill-emerald">Why This App?</span>
+            <h2
+              className="section-heading text-4xl font-extrabold mt-3"
+              style={{ color: 'rgba(241,245,249,0.95)' }}
+            >
+              Engineered to Teach Mathematics
+            </h2>
+            <p className="text-sm max-w-lg mx-auto" style={{ color: 'rgba(100,116,139,0.9)' }}>
+              Linking mathematical theory to computational workflows for intuitive learning.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {features.map((feat, idx) => {
+              const IconComponent = feat.icon;
+              return (
+                <div
+                  key={idx}
+                  className={`animate-fade-up delay-${Math.min((idx + 1) * 100, 600)} p-6 rounded-2xl transition-all duration-300 group`}
+                  style={{
+                    background: 'rgba(255,255,255,0.02)',
+                    border: '1px solid rgba(255,255,255,0.05)',
+                  }}
+                  onMouseEnter={e => {
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.background = 'rgba(108,99,255,0.05)';
+                    el.style.borderColor = 'rgba(108,99,255,0.2)';
+                    el.style.transform = 'translateY(-4px)';
+                  }}
+                  onMouseLeave={e => {
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.background = 'rgba(255,255,255,0.02)';
+                    el.style.borderColor = 'rgba(255,255,255,0.05)';
+                    el.style.transform = 'translateY(0)';
+                  }}
+                >
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
+                    style={{
+                      background: `${feat.color}20`,
+                      border: `1px solid ${feat.color}40`,
+                    }}
+                  >
+                    <IconComponent className="w-5 h-5" style={{ color: feat.color }} />
+                  </div>
+                  <h3
+                    className="font-bold text-base mb-2"
+                    style={{ color: 'rgba(226,232,240,0.95)', fontFamily: "'Outfit', sans-serif" }}
+                  >
+                    {feat.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed" style={{ color: 'rgba(100,116,139,0.9)' }}>
+                    {feat.desc}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CALL TO ACTION BOTTOM ── */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl mx-auto text-center space-y-6 animate-fade-up">
+          <h2
+            className="section-heading text-3xl font-extrabold"
+            style={{ color: 'rgba(241,245,249,0.95)' }}
+          >
+            Ready to Explore?
           </h2>
-          <p className="text-slate-655 dark:text-slate-400 text-sm max-w-xl mx-auto">
-            Engineered specifically to teach mathematics intuitively by linking mathematical theory to computational workflows.
+          <p style={{ color: 'rgba(100,116,139,0.9)' }} className="text-sm">
+            Jump into any calculator and start solving problems step-by-step.
           </p>
+          <button
+            onClick={exploreAllModules}
+            className="btn-glow mx-auto flex items-center gap-2"
+            id="cta-bottom"
+          >
+            View All Modules
+            <ArrowRight className="w-4 h-4" />
+          </button>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="flex gap-4">
-            <div className="w-10 h-10 shrink-0 rounded-xl bg-indigo-50 dark:bg-indigo-950/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
-              <CheckCircle className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-bold text-slate-905 dark:text-slate-100">Interactive Learning</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
-                Rather than standard calculators, students adjust parameters dynamically and observe immediate updates.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex gap-4">
-            <div className="w-10 h-10 shrink-0 rounded-xl bg-purple-50 dark:bg-purple-950/30 flex items-center justify-center text-purple-600 dark:text-purple-400">
-              <CheckCircle className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-bold text-slate-905 dark:text-slate-100">Step-by-Step Solutions</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
-                Calculators list every algebraic substitution, division, and simplification step to clarify calculations.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex gap-4">
-            <div className="w-10 h-10 shrink-0 rounded-xl bg-pink-50 dark:bg-pink-950/30 flex items-center justify-center text-pink-600 dark:text-pink-400">
-              <CheckCircle className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-bold text-slate-905 dark:text-slate-100">Visual Understanding</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
-                Visualizing functions, modular wheels, complex planes, and combinatoric grids helps build geometric intuition.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex gap-4">
-            <div className="w-10 h-10 shrink-0 rounded-xl bg-teal-50 dark:bg-teal-950/30 flex items-center justify-center text-teal-600 dark:text-teal-400">
-              <CheckCircle className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-bold text-slate-905 dark:text-slate-100">Real-Life Context</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
-                Includes context on how number theory, complex numbers, permutations, and limits are applied in code, cryptography, and science.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex gap-4">
-            <div className="w-10 h-10 shrink-0 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
-              <CheckCircle className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-bold text-slate-905 dark:text-slate-100">Error-Free Validation</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
-                Catches invalid entries like dividing by complex zeros, negative modulus, or non-calculable limit expressions instantly.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex gap-4">
-            <div className="w-10 h-10 shrink-0 rounded-xl bg-rose-50 dark:bg-rose-950/30 flex items-center justify-center text-rose-600 dark:text-rose-400">
-              <CheckCircle className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-bold text-slate-905 dark:text-slate-100">Report-Friendly Displays</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
-                Clean and high-contrast pages styled explicitly to capture sharp, well-aligned screenshots for printed project reports.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      </section>
     </div>
   );
 };

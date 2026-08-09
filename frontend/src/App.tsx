@@ -17,17 +17,19 @@ import { LimitModule } from './modules/LimitModule';
 function App() {
   const [activePage, setActivePage] = useState<string>('home');
   const [unitFilter, setUnitFilter] = useState<'all' | 'unit1' | 'unit2'>('all');
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  const [pageKey, setPageKey] = useState(0);
 
-  // Sync dark class on the HTML document element
+  // Always dark mode — force 'dark' class on the HTML root
   useEffect(() => {
-    const root = window.document.documentElement;
-    if (isDarkMode) {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
-  }, [isDarkMode]);
+    document.documentElement.classList.add('dark');
+  }, []);
+
+  // Scroll to top & trigger page animation on navigation
+  const navigateTo = (page: string) => {
+    setActivePage(page);
+    setPageKey(k => k + 1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   // Scroll to top of the page when navigating to a new tab/module
   useEffect(() => {
@@ -38,17 +40,17 @@ function App() {
   const renderActivePage = () => {
     switch (activePage) {
       case 'home':
-        return <Home setActivePage={setActivePage} setUnitFilter={setUnitFilter} />;
+        return <Home setActivePage={navigateTo} setUnitFilter={setUnitFilter} />;
       case 'dashboard':
         return (
           <ModulesDashboard
-            setActivePage={setActivePage}
+            setActivePage={navigateTo}
             unitFilter={unitFilter}
             setUnitFilter={setUnitFilter}
           />
         );
       case 'concepts':
-        return <Concepts setActivePage={setActivePage} />;
+        return <Concepts setActivePage={navigateTo} />;
       case 'help':
         return <Help />;
       case 'gcd':
@@ -64,30 +66,32 @@ function App() {
       case 'limit':
         return <LimitModule />;
       default:
-        return <Home setActivePage={setActivePage} setUnitFilter={setUnitFilter} />;
+        return <Home setActivePage={navigateTo} setUnitFilter={setUnitFilter} />;
     }
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-200">
+    <div className="flex flex-col min-h-screen relative" style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
+      {/* Animated background layers */}
+      <div className="bg-orbs" aria-hidden="true" />
+      <div className="bg-grid" aria-hidden="true" />
+
       {/* Navigation header */}
       <Navbar
         activePage={activePage}
-        setActivePage={setActivePage}
+        setActivePage={navigateTo}
         setUnitFilter={setUnitFilter}
-        isDarkMode={isDarkMode}
-        setIsDarkMode={setIsDarkMode}
       />
 
       {/* Main page content container */}
-      <main className="flex-grow pb-16">
-        <div className="animate-fade-in duration-200">
+      <main className="flex-grow pb-16 relative z-10">
+        <div key={pageKey} className="animate-fade-up">
           {renderActivePage()}
         </div>
       </main>
 
       {/* Persistent footer */}
-      <Footer />
+      <Footer setActivePage={navigateTo} />
     </div>
   );
 }

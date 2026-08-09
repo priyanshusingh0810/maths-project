@@ -16,6 +16,8 @@ export const MathFormula: React.FC<MathFormulaProps> = ({ formula, block = false
         katex.render(formula, containerRef.current, {
           displayMode: block,
           throwOnError: false,
+          output: 'html',
+          trust: false,
         });
       } catch (err) {
         containerRef.current.textContent = formula;
@@ -23,5 +25,11 @@ export const MathFormula: React.FC<MathFormulaProps> = ({ formula, block = false
     }
   }, [formula, block]);
 
-  return <span ref={containerRef} className={`${className} inline-block select-all`} />;
+  return (
+    <span
+      ref={containerRef}
+      className={`${className} inline-block select-all`}
+      style={{ color: '#e2e8f0' }}
+    />
+  );
 };

@@ -187,17 +187,15 @@ export const CongruenceModule: React.FC = () => {
   ];
 
   return (
-    <div className="py-8 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-10">
+    <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-10">
       
       {/* Title */}
-      <div className="border-b pb-4 border-slate-200 dark:border-slate-800 space-y-2">
-        <span className="text-xs uppercase font-bold tracking-widest px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400">
-          Unit I &bull; Number Theory
-        </span>
-        <h1 className="text-3xl sm:text-4xl font-black text-slate-850 dark:text-white">
-          Modular Congruence Calculator
+      <div className="animate-fade-up pb-6" style={{ borderBottom: '1px solid rgba(168,85,247,0.12)' }}>
+        <span className="neon-pill neon-pill-purple mb-3 inline-flex">Unit I · Modular Arithmetic</span>
+        <h1 className="section-heading text-3xl sm:text-4xl font-black mt-2" style={{ color: 'rgba(241,245,249,0.95)' }}>
+          Congruence Calculator — <span className="gradient-text-static">Modular Arithmetic</span>
         </h1>
-        <p className="text-slate-655 dark:text-slate-400 text-sm max-w-2xl">
+        <p className="text-sm mt-2 max-w-2xl" style={{ color: 'rgba(100,116,139,0.9)' }}>
           Evaluate modular congruence configurations and view clock division offsets using remainder clock rings.
         </p>
       </div>
