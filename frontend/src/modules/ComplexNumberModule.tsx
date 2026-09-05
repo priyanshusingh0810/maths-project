@@ -5,6 +5,7 @@ import { SolutionPanel } from '../components/SolutionPanel';
 import { RealLifeApplications } from '../components/RealLifeApplications';
 import { MathFormula } from '../components/MathFormula';
 import { Play, RotateCcw, Loader2 } from 'lucide-react';
+import { SimulationSegment } from '../components/SimulationSegment';
 
 export const ComplexNumberModule: React.FC = () => {
   const [z1Real, setZ1Real] = useState<string>('2');
@@ -444,11 +445,15 @@ export const ComplexNumberModule: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm">
             
             {/* Left Col: Coordinate Visualization */}
-            <div className="space-y-4 flex flex-col items-center">
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white self-start">
-                Interactive Complex Plane
-              </h3>
-              {renderComplexPlane()}
+            <div className="space-y-4 flex flex-col w-full">
+              <SimulationSegment
+                title="Interactive Complex Plane"
+                description="Click to place complex vectors z1 and z2 on the Cartesian grid"
+              >
+                <div className="flex flex-col items-center justify-center py-4">
+                  {renderComplexPlane()}
+                </div>
+              </SimulationSegment>
             </div>
 
             {/* Right Col: Mathematical results */}

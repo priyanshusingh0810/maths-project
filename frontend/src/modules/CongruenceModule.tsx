@@ -5,6 +5,7 @@ import { SolutionPanel } from '../components/SolutionPanel';
 import { RealLifeApplications } from '../components/RealLifeApplications';
 import { MathFormula } from '../components/MathFormula';
 import { Play, RotateCcw, HelpCircle, Loader2, CircleDot } from 'lucide-react';
+import { SimulationSegment } from '../components/SimulationSegment';
 
 export const CongruenceModule: React.FC = () => {
   const [aStr, setAStr] = useState<string>('');
@@ -293,8 +294,8 @@ export const CongruenceModule: React.FC = () => {
             <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-8">
               
               {/* Giant Congruent Status Conclusion */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center bg-slate-50 dark:bg-slate-950/40 p-6 rounded-2xl border border-slate-200/60 dark:border-slate-850/60">
-                <div className="text-center sm:text-left space-y-2">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start bg-slate-50 dark:bg-slate-950/40 p-6 rounded-2xl border border-slate-200/60 dark:border-slate-850/60">
+                <div className="text-center lg:text-left space-y-2 mt-4 lg:mt-10">
                   <span className="text-[10px] font-black uppercase tracking-wider text-slate-500">
                     Conclusion Status
                   </span>
@@ -313,8 +314,15 @@ export const CongruenceModule: React.FC = () => {
                 </div>
 
                 {/* Draw modular remainder wheel visualization */}
-                <div>
-                  {renderClockCircle(parseInt(mStr, 10), response.a_mod, response.b_mod)}
+                <div className="w-full">
+                  <SimulationSegment
+                    title="Modular Clock Arithmetic"
+                    description={`Visualizing modulo ${mStr} remainders on a circular dial`}
+                  >
+                    <div className="flex flex-col items-center justify-center py-4">
+                      {renderClockCircle(parseInt(mStr, 10), response.a_mod, response.b_mod)}
+                    </div>
+                  </SimulationSegment>
                 </div>
               </div>
 

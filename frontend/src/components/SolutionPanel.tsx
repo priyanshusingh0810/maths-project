@@ -61,7 +61,6 @@ export const SolutionPanel: React.FC<SolutionPanelProps> = ({
   finalAnswer,
   explanation,
 }) => {
-  const stepNum = (base: number) => substitution ? base : base - 1;
 
   return (
     <div className="space-y-6">
@@ -108,7 +107,7 @@ export const SolutionPanel: React.FC<SolutionPanelProps> = ({
         <Step
           number={2}
           label="Mathematical Formula"
-          icon={<FunctionSquare className="w-4 h-4" />}
+          icon={<Calculator className="w-4 h-4" />}
           color="#a5b4fc"
           borderColor="rgba(108,99,255,0.5)"
         >

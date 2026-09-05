@@ -5,6 +5,7 @@ import { Home } from './pages/Home';
 import { ModulesDashboard } from './pages/ModulesDashboard';
 import { Concepts } from './pages/Concepts';
 import { Help } from './pages/Help';
+import { SimulationsPage } from './pages/SimulationsPage';
 
 // Mathematical Modules
 import { GCDModule } from './modules/GCDModule';
@@ -18,11 +19,34 @@ function App() {
   const [activePage, setActivePage] = useState<string>('home');
   const [unitFilter, setUnitFilter] = useState<'all' | 'unit1' | 'unit2'>('all');
   const [pageKey, setPageKey] = useState(0);
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    return (localStorage.getItem('theme') as 'dark' | 'light') || 'dark';
+  });
 
-  // Always dark mode — force 'dark' class on the HTML root
+  // Apply theme to document element
   useEffect(() => {
-    document.documentElement.classList.add('dark');
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  // Global mouse tracking for dynamic lighting
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
 
   // Scroll to top & trigger page animation on navigation
   const navigateTo = (page: string) => {
@@ -63,6 +87,8 @@ function App() {
         return <PermutationModule />;
       case 'combination':
         return <CombinationModule />;
+      case 'simulations':
+        return <SimulationsPage />;
       case 'limit':
         return <LimitModule />;
       default:
@@ -76,11 +102,12 @@ function App() {
       <div className="bg-orbs" aria-hidden="true" />
       <div className="bg-grid" aria-hidden="true" />
 
-      {/* Navigation header */}
-      <Navbar
-        activePage={activePage}
-        setActivePage={navigateTo}
+      <Navbar 
+        activePage={activePage} 
+        setActivePage={navigateTo} 
         setUnitFilter={setUnitFilter}
+        theme={theme}
+        toggleTheme={toggleTheme}
       />
 
       {/* Main page content container */}

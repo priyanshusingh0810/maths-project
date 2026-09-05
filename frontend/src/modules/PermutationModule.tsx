@@ -5,6 +5,8 @@ import { SolutionPanel } from '../components/SolutionPanel';
 import { RealLifeApplications } from '../components/RealLifeApplications';
 import { MathFormula } from '../components/MathFormula';
 import { Play, RotateCcw, HelpCircle, Loader2, Shuffle } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { SimulationSegment } from '../components/SimulationSegment';
 
 export const PermutationModule: React.FC = () => {
   const [nStr, setNStr] = useState<string>('');
@@ -259,12 +261,59 @@ export const PermutationModule: React.FC = () => {
                 </div>
               </div>
 
-              {/* Slot Visualizer */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                  Arrangement Space Visualization
-                </h3>
-                {renderArrangementSlots(parseInt(nStr, 10), parseInt(rStr, 10))}
+              {/* Simulation Visualizer */}
+              <div className="space-y-4 animate-fade-up" style={{ animationDelay: '0.1s' }}>
+                <SimulationSegment 
+                  title="Permutation Growth Distribution"
+                  description={`Comparing nPr values for a fixed n = ${nStr} across different choices of r`}
+                >
+                  <div className="flex flex-col gap-6 w-full">
+                    <div className="h-64 w-full mt-4">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={(() => {
+                          const n = parseInt(nStr, 10);
+                          const fact = (num: number): number => num <= 1 ? 1 : num * fact(num - 1);
+                          return Array.from({ length: n + 1 }).map((_, x) => ({
+                            rVal: x,
+                            permutations: fact(n) / fact(n - x)
+                          }));
+                        })()}>
+                          <XAxis dataKey="rVal" stroke="#8b5cf6" tick={{ fill: '#8b5cf6' }} />
+                          <YAxis 
+                            tickFormatter={(value) => value > 10000 ? value.toExponential(1) : value.toString()}
+                            stroke="#8b5cf6" 
+                            tick={{ fill: '#8b5cf6' }} 
+                            width={60} 
+                          />
+                          <Tooltip 
+                            contentStyle={{ backgroundColor: 'rgba(15, 23, 42, 0.9)', borderColor: 'rgba(139, 92, 246, 0.3)', borderRadius: '12px', color: '#fff' }}
+                            itemStyle={{ color: '#c4b5fd' }}
+                            formatter={(value: any) => [Number(value).toLocaleString(), 'Permutations (nPr)']}
+                            labelFormatter={(label) => `Choosing r = ${label}`}
+                          />
+                          <Bar 
+                            dataKey="permutations" 
+                            fill="#8b5cf6" 
+                            radius={[4, 4, 0, 0]} 
+                            animationDuration={1500}
+                          >
+                            {(() => {
+                              const n = parseInt(nStr, 10);
+                              const targetR = parseInt(rStr, 10);
+                              return Array.from({ length: n + 1 }).map((_, index) => (
+                                <Cell key={`cell-${index}`} fill={index === targetR ? '#10b981' : '#8b5cf6'} />
+                              ));
+                            })()}
+                          </Bar>
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </div>
+
+                    <div className="border-t border-slate-200/20 dark:border-slate-800 pt-4">
+                      {renderArrangementSlots(parseInt(nStr, 10), parseInt(rStr, 10))}
+                    </div>
+                  </div>
+                </SimulationSegment>
               </div>
 
               {/* Standard Educational Solution Panel */}

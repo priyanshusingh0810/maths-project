@@ -5,6 +5,7 @@ import { SolutionPanel } from '../components/SolutionPanel';
 import { RealLifeApplications } from '../components/RealLifeApplications';
 import { MathFormula } from '../components/MathFormula';
 import { Play, RotateCcw, HelpCircle, Check, Loader2, Binary } from 'lucide-react';
+import { SimulationSegment } from '../components/SimulationSegment';
 
 // Shared dark-theme module styles
 const moduleStyles = {
@@ -233,14 +234,12 @@ export const GCDModule: React.FC = () => {
 
               {/* Euclidean Division Cards */}
               <div className="space-y-3">
-                <h3
-                  className="font-bold text-base"
-                  style={{ color: 'rgba(226,232,240,0.95)', fontFamily: "'Outfit', sans-serif" }}
+                <SimulationSegment
+                  title="Euclidean Division Pipeline"
+                  description="Visualizing the step-by-step modulo reduction"
                 >
-                  Euclidean Division Pipeline
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {response.steps.map((step, index) => {
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full mt-2">
+                    {response.steps.map((step, index) => {
                     const isLast = index === response.steps.length - 1;
                     return (
                       <div
@@ -306,7 +305,8 @@ export const GCDModule: React.FC = () => {
                       </div>
                     );
                   })}
-                </div>
+                  </div>
+                </SimulationSegment>
               </div>
 
               {/* Solution Panel */}

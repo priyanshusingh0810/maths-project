@@ -5,6 +5,7 @@ import { SolutionPanel } from '../components/SolutionPanel';
 import { RealLifeApplications } from '../components/RealLifeApplications';
 import { MathFormula } from '../components/MathFormula';
 import { RotateCcw, HelpCircle, Loader2 } from 'lucide-react';
+import { SimulationSegment } from '../components/SimulationSegment';
 
 export const LimitModule: React.FC = () => {
   const [expression, setExpression] = useState<string>('(x^2 - 4)/(x - 2)');
@@ -354,17 +355,21 @@ export const LimitModule: React.FC = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm">
             {/* Left Col: Plot */}
-            <div className="space-y-4 flex flex-col items-center">
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white self-start">
-                Limit Function Graph
-              </h3>
-              {response ? (
-                renderLimitGraph(response.points, parseFloat(aPoint))
-              ) : (
-                <div className="w-[360px] h-[200px] border border-slate-100 dark:border-slate-850 rounded-2xl flex items-center justify-center text-slate-400 text-xs">
-                  Chart loads after calculation
+            <div className="space-y-4 flex flex-col w-full">
+              <SimulationSegment
+                title="Limit Function Graph"
+                description={`Cartesian simulation approaching x = ${aPoint}`}
+              >
+                <div className="flex flex-col items-center justify-center py-4">
+                  {response ? (
+                    renderLimitGraph(response.points, parseFloat(aPoint))
+                  ) : (
+                    <div className="w-[360px] h-[200px] border border-slate-100 dark:border-slate-850 rounded-2xl flex items-center justify-center text-slate-400 text-xs">
+                      Chart loads after calculation
+                    </div>
+                  )}
                 </div>
-              )}
+              </SimulationSegment>
             </div>
 
             {/* Right Col: Left, Right, Two-Sided Values */}

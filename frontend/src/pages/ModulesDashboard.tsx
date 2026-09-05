@@ -1,5 +1,5 @@
 import React from 'react';
-import { Binary, CircleDot, Compass, Shuffle, Layers, Activity, ArrowRight, LayoutGrid, BookOpen, Sparkles } from 'lucide-react';
+import { Binary, CircleDot, Compass, Shuffle, Layers, Activity, ArrowRight, LayoutGrid, BookOpen } from 'lucide-react';
 
 interface ModulesDashboardProps {
   setActivePage: (page: string) => void;
@@ -13,10 +13,10 @@ export const ModulesDashboard: React.FC<ModulesDashboardProps> = ({
   setUnitFilter,
 }) => {
   const stats = [
-    { label: 'Syllabus Units', value: '2', detail: 'Unit I & Unit II', color: '#6C63FF' },
-    { label: 'Math Modules', value: '6', detail: 'Fully Functional', color: '#A855F7' },
-    { label: 'Visualizations', value: '6', detail: 'Circles, Planes, Graphs', color: '#10B981' },
-    { label: 'Solution Steps', value: '∞', detail: 'With KaTeX LaTeX', color: '#F59E0B' },
+    { label: 'Syllabus Units', value: '2', detail: 'Unit I & Unit II', color: 'var(--accent-primary)' },
+    { label: 'Math Modules', value: '6', detail: 'Fully Functional', color: 'var(--accent-secondary)' },
+    { label: 'Visualizations', value: '6', detail: 'Circles, Planes, Graphs', color: 'var(--accent-emerald)' },
+    { label: 'Solution Steps', value: '∞', detail: 'With KaTeX LaTeX', color: 'var(--accent-amber)' },
   ];
 
   const unit1Modules = [
@@ -26,8 +26,8 @@ export const ModulesDashboard: React.FC<ModulesDashboardProps> = ({
       subtitle: 'Euclidean Algorithm',
       desc: 'Calculate GCD of two numbers and visualize the division process step-by-step.',
       icon: Binary,
-      gradient: 'linear-gradient(135deg, #3B82F6, #6C63FF)',
-      glow: 'rgba(108,99,255,0.35)',
+      gradient: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))',
+      glow: 'var(--glow-primary)',
       pill: 'neon-pill-indigo',
     },
     {
@@ -36,9 +36,9 @@ export const ModulesDashboard: React.FC<ModulesDashboardProps> = ({
       subtitle: 'Modular Arithmetic',
       desc: 'Check congruency status, calculate modulo remainders, and inspect a modular number-circle.',
       icon: CircleDot,
-      gradient: 'linear-gradient(135deg, #6C63FF, #A855F7)',
-      glow: 'rgba(168,85,247,0.35)',
-      pill: 'neon-pill-purple',
+      gradient: 'linear-gradient(135deg, var(--accent-secondary), var(--accent-primary))',
+      glow: 'var(--glow-secondary)',
+      pill: 'neon-pill-indigo',
     },
     {
       id: 'complex',
@@ -46,9 +46,9 @@ export const ModulesDashboard: React.FC<ModulesDashboardProps> = ({
       subtitle: 'Coordinate Geometry & Vectors',
       desc: 'Perform complex arithmetic operations and plot numbers dynamically on the complex plane.',
       icon: Compass,
-      gradient: 'linear-gradient(135deg, #A855F7, #EC4899)',
-      glow: 'rgba(236,72,153,0.35)',
-      pill: 'neon-pill-rose',
+      gradient: 'linear-gradient(135deg, var(--accent-cyan), var(--accent-primary))',
+      glow: 'var(--glow-primary)',
+      pill: 'neon-pill-indigo',
     },
   ];
 
@@ -59,9 +59,9 @@ export const ModulesDashboard: React.FC<ModulesDashboardProps> = ({
       subtitle: 'Arrangements (Order Matters)',
       desc: 'Compute nPr values and visualize permutation slot arrangements.',
       icon: Shuffle,
-      gradient: 'linear-gradient(135deg, #14B8A6, #10B981)',
-      glow: 'rgba(16,185,129,0.35)',
-      pill: 'neon-pill-teal',
+      gradient: 'linear-gradient(135deg, var(--accent-emerald), var(--accent-cyan))',
+      glow: 'var(--glow-emerald)',
+      pill: 'neon-pill-indigo',
     },
     {
       id: 'combination',
@@ -69,9 +69,9 @@ export const ModulesDashboard: React.FC<ModulesDashboardProps> = ({
       subtitle: 'Selections (Order Irrelevant)',
       desc: 'Compute nCr values and see selection groupings compared against permutations.',
       icon: Layers,
-      gradient: 'linear-gradient(135deg, #10B981, #06B6D4)',
-      glow: 'rgba(6,182,212,0.35)',
-      pill: 'neon-pill-emerald',
+      gradient: 'linear-gradient(135deg, var(--accent-tertiary), var(--accent-primary))',
+      glow: 'var(--glow-primary)',
+      pill: 'neon-pill-indigo',
     },
     {
       id: 'limit',
@@ -79,9 +79,9 @@ export const ModulesDashboard: React.FC<ModulesDashboardProps> = ({
       subtitle: 'Calculus Foundations',
       desc: 'Solve left/right/two-sided limits of expressions using SymPy and visualize dynamic coordinates.',
       icon: Activity,
-      gradient: 'linear-gradient(135deg, #F59E0B, #EF4444)',
-      glow: 'rgba(239,68,68,0.35)',
-      pill: 'neon-pill-amber',
+      gradient: 'linear-gradient(135deg, var(--accent-amber), var(--accent-tertiary))',
+      glow: 'var(--glow-secondary)',
+      pill: 'neon-pill-indigo',
     },
   ];
 
@@ -91,37 +91,37 @@ export const ModulesDashboard: React.FC<ModulesDashboardProps> = ({
       <div
         key={m.id}
         className="glass-card flex flex-col"
-        style={{ padding: '28px' }}
+        style={{ padding: '24px' }}
       >
-        <div className="flex items-start gap-4 mb-5">
+        <div className="flex items-start gap-3 mb-5">
           <div
-            className="w-12 h-12 rounded-2xl flex items-center justify-center icon-glow shrink-0"
+            className="w-10 h-10 rounded-xl flex items-center justify-center icon-glow shrink-0"
             style={{
               background: m.gradient,
-              boxShadow: `0 8px 24px ${m.glow}`,
+              boxShadow: `0 4px 12px ${m.glow}`,
             }}
           >
-            <IconComponent className="w-6 h-6 text-white" />
+            <IconComponent className="w-5 h-5" style={{ color: '#ffffff' }} />
           </div>
           <div>
             <h3
-              className="font-bold text-base leading-tight"
-              style={{
-                color: 'rgba(241,245,249,0.95)',
-                fontFamily: "'Outfit', sans-serif",
-              }}
+              className="font-bold text-sm leading-tight mb-1"
+              style={{ color: 'var(--text-primary)', fontFamily: "'Inter', sans-serif" }}
             >
               {m.name}
             </h3>
-            <span className={`neon-pill ${m.pill} mt-1 inline-flex text-[10px]`}>
+            <span
+              className="text-[10px] font-semibold uppercase tracking-wider"
+              style={{ color: 'var(--text-faint)' }}
+            >
               {m.subtitle}
             </span>
           </div>
         </div>
 
         <p
-          className="text-sm leading-relaxed flex-1 mb-6"
-          style={{ color: 'rgba(100,116,139,0.9)' }}
+          className="text-sm leading-relaxed flex-1 mb-5"
+          style={{ color: 'var(--text-muted)' }}
         >
           {m.desc}
         </p>
@@ -129,51 +129,36 @@ export const ModulesDashboard: React.FC<ModulesDashboardProps> = ({
         <button
           onClick={() => setActivePage(m.id)}
           id={`dashboard-btn-${m.id}`}
-          className="w-full py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-200 group"
-          style={{
-            background: 'rgba(108,99,255,0.12)',
-            border: '1px solid rgba(108,99,255,0.25)',
-            color: '#a5b4fc',
-            cursor: 'pointer',
-          }}
-          onMouseEnter={e => {
-            const el = e.currentTarget as HTMLElement;
-            el.style.background = 'linear-gradient(135deg, rgba(108,99,255,0.35), rgba(168,85,247,0.2))';
-            el.style.borderColor = 'rgba(108,99,255,0.6)';
-            el.style.color = 'white';
-            el.style.boxShadow = `0 8px 24px ${m.glow}`;
-          }}
-          onMouseLeave={e => {
-            const el = e.currentTarget as HTMLElement;
-            el.style.background = 'rgba(108,99,255,0.12)';
-            el.style.borderColor = 'rgba(108,99,255,0.25)';
-            el.style.color = '#a5b4fc';
-            el.style.boxShadow = 'none';
-          }}
+          className="w-full btn-outline-glow text-sm flex items-center justify-center gap-2 group"
+          style={{ padding: '10px', marginTop: 'auto' }}
         >
           Open Calculator
-          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
         </button>
       </div>
     );
   };
 
   return (
-    <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
+    <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-10">
 
       {/* Page Header */}
-      <div className="text-center space-y-3 animate-fade-up">
-        <span className="neon-pill neon-pill-indigo">
-          <LayoutGrid className="w-3 h-3" />
-          Modules Dashboard
-        </span>
+      <div className="animate-fade-up">
+        <div className="flex items-center gap-2 mb-3">
+          <LayoutGrid className="w-4 h-4" style={{ color: 'var(--accent-primary)' }} />
+          <span
+            className="text-xs font-bold uppercase tracking-widest"
+            style={{ color: 'var(--accent-primary)' }}
+          >
+            Modules Dashboard
+          </span>
+        </div>
         <h1
-          className="section-heading text-4xl sm:text-5xl font-black mt-3"
-          style={{ color: 'rgba(241,245,249,0.95)' }}
+          className="section-heading text-3xl sm:text-4xl mb-2"
         >
           All <span className="gradient-text-static">Calculators</span>
         </h1>
-        <p className="text-sm max-w-lg mx-auto" style={{ color: 'rgba(100,116,139,0.9)' }}>
+        <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
           Choose any module to open its interactive calculator, step-by-step solver, and visualizer.
         </p>
       </div>
@@ -181,23 +166,20 @@ export const ModulesDashboard: React.FC<ModulesDashboardProps> = ({
       {/* Stats Bar */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 animate-fade-up delay-100">
         {stats.map((s, idx) => (
-          <div key={idx} className="stat-card text-center lg:text-left">
+          <div key={idx} className="stat-card">
             <span
-              className="text-xs uppercase tracking-wider font-bold block mb-2"
-              style={{ color: 'rgba(100,116,139,0.7)' }}
+              className="text-xs uppercase tracking-wider font-semibold block mb-2"
+              style={{ color: 'var(--text-faint)' }}
             >
               {s.label}
             </span>
             <div
-              className="section-heading text-2xl sm:text-3xl font-black"
-              style={{ color: s.color }}
+              className="text-2xl sm:text-3xl font-black mb-0.5"
+              style={{ color: s.color, fontFamily: "'Inter', sans-serif" }}
             >
               {s.value}
             </div>
-            <div
-              className="text-xs mt-1 font-medium"
-              style={{ color: 'rgba(100,116,139,0.7)' }}
-            >
+            <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
               {s.detail}
             </div>
           </div>
@@ -237,41 +219,27 @@ export const ModulesDashboard: React.FC<ModulesDashboardProps> = ({
 
         {/* Unit I */}
         {(unitFilter === 'all' || unitFilter === 'unit1') && (
-          <div className="space-y-6 animate-fade-up delay-300">
-            <div className="flex items-center gap-4">
+          <div className="space-y-5 animate-fade-up delay-300">
+            <div
+              className="flex items-center gap-4 pb-4"
+              style={{ borderBottom: '1px solid var(--border-default)' }}
+            >
               <div
-                className="h-px flex-1"
-                style={{ background: 'linear-gradient(90deg, rgba(108,99,255,0.6), transparent)' }}
-              />
-              <div className="flex items-center gap-3">
-                <span
-                  className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black"
-                  style={{
-                    background: 'linear-gradient(135deg, #6C63FF, #A855F7)',
-                    color: 'white',
-                  }}
-                >
-                  I
-                </span>
-                <div>
-                  <h2
-                    className="section-heading text-xl font-extrabold"
-                    style={{ color: 'rgba(241,245,249,0.95)' }}
-                  >
-                    UNIT I — Number Theory & Complex Numbers
-                  </h2>
-                  <p className="text-xs" style={{ color: 'rgba(100,116,139,0.7)' }}>
-                    GCD · Modular Congruence · Complex Arithmetic
-                  </p>
-                </div>
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-black text-white"
+                style={{ background: 'var(--accent-primary)' }}
+              >
+                I
               </div>
-              <div
-                className="h-px flex-1"
-                style={{ background: 'linear-gradient(90deg, transparent, rgba(108,99,255,0.3))' }}
-              />
+              <div>
+                <h2 className="section-heading text-lg font-bold">
+                  Unit I — Number Theory & Complex Numbers
+                </h2>
+                <p className="text-xs" style={{ color: 'var(--text-faint)' }}>
+                  GCD · Modular Congruence · Complex Arithmetic
+                </p>
+              </div>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {unit1Modules.map(renderModuleCard)}
             </div>
           </div>
@@ -279,41 +247,27 @@ export const ModulesDashboard: React.FC<ModulesDashboardProps> = ({
 
         {/* Unit II */}
         {(unitFilter === 'all' || unitFilter === 'unit2') && (
-          <div className="space-y-6 animate-fade-up delay-400">
-            <div className="flex items-center gap-4">
+          <div className="space-y-5 animate-fade-up delay-400">
+            <div
+              className="flex items-center gap-4 pb-4"
+              style={{ borderBottom: '1px solid var(--border-default)' }}
+            >
               <div
-                className="h-px flex-1"
-                style={{ background: 'linear-gradient(90deg, rgba(16,185,129,0.6), transparent)' }}
-              />
-              <div className="flex items-center gap-3">
-                <span
-                  className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black"
-                  style={{
-                    background: 'linear-gradient(135deg, #10B981, #06B6D4)',
-                    color: 'white',
-                  }}
-                >
-                  II
-                </span>
-                <div>
-                  <h2
-                    className="section-heading text-xl font-extrabold"
-                    style={{ color: 'rgba(241,245,249,0.95)' }}
-                  >
-                    UNIT II — Combinatorics & Calculus
-                  </h2>
-                  <p className="text-xs" style={{ color: 'rgba(100,116,139,0.7)' }}>
-                    Permutations · Combinations · Limits
-                  </p>
-                </div>
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-black text-white"
+                style={{ background: 'var(--accent-emerald)' }}
+              >
+                II
               </div>
-              <div
-                className="h-px flex-1"
-                style={{ background: 'linear-gradient(90deg, transparent, rgba(16,185,129,0.3))' }}
-              />
+              <div>
+                <h2 className="section-heading text-lg font-bold">
+                  Unit II — Combinatorics & Calculus
+                </h2>
+                <p className="text-xs" style={{ color: 'var(--text-faint)' }}>
+                  Permutations · Combinations · Limits
+                </p>
+              </div>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {unit2Modules.map(renderModuleCard)}
             </div>
           </div>

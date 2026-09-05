@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sigma, ExternalLink, BookOpen, Layers } from 'lucide-react';
+import { Sigma } from 'lucide-react';
 
 interface FooterProps {
   setActivePage?: (page: string) => void;
@@ -12,58 +12,59 @@ export const Footer: React.FC<FooterProps> = ({ setActivePage }) => {
 
   const links = [
     { label: 'Home', page: 'home' },
-    { label: 'Modules', page: 'dashboard' },
+    { label: 'All Modules', page: 'dashboard' },
     { label: 'Concepts', page: 'concepts' },
     { label: 'Help', page: 'help' },
+  ];
+
+  const modules = [
+    { label: 'GCD Calculator', page: 'gcd' },
+    { label: 'Congruence', page: 'congruence' },
+    { label: 'Complex Numbers', page: 'complex' },
+    { label: 'Permutation', page: 'permutation' },
+    { label: 'Combination', page: 'combination' },
+    { label: 'Limits', page: 'limit' },
   ];
 
   return (
     <footer
       className="relative z-10 mt-auto"
       style={{
-        background: 'rgba(8, 12, 24, 0.95)',
-        borderTop: '1px solid rgba(108,99,255,0.12)',
+        background: 'var(--bg-secondary)',
+        borderTop: '1px solid var(--border-default)',
       }}
     >
-      {/* Top gradient line */}
-      <div className="gradient-divider" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+
           {/* Brand */}
-          <div className="space-y-4">
+          <div className="md:col-span-2 space-y-4">
             <button
               onClick={() => navigate('home')}
-              className="flex items-center gap-3 group cursor-pointer"
+              className="flex items-center gap-2.5 group cursor-pointer"
               style={{ background: 'none', border: 'none', padding: 0 }}
             >
               <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center"
+                className="w-8 h-8 rounded-lg flex items-center justify-center"
                 style={{
-                  background: 'linear-gradient(135deg, #6C63FF, #A855F7)',
-                  boxShadow: '0 4px 15px rgba(108,99,255,0.3)',
+                  background: 'var(--accent-primary)',
+                  boxShadow: '0 2px 8px var(--glow-primary)',
                 }}
               >
-                <Sigma className="w-5 h-5 text-white" />
+                <Sigma className="w-4 h-4 text-white" />
               </div>
               <span
-                className="font-extrabold text-lg tracking-tight"
-                style={{
-                  background: 'linear-gradient(135deg, #ffffff, #a5b4fc)',
-                  backgroundClip: 'text',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  fontFamily: "'Outfit', sans-serif",
-                }}
+                className="font-bold text-base"
+                style={{ color: 'var(--text-primary)', fontFamily: "'Inter', sans-serif" }}
               >
                 Math in Action
               </span>
             </button>
-            <p
-              className="text-sm leading-relaxed"
-              style={{ color: 'rgba(100,116,139,0.9)' }}
-            >
-              An interactive mathematics explorer for T.Y.B.Sc. Data Science students, covering Unit I & II of Basics of Mathematics in Real Life-IV.
+            <p className="text-sm leading-relaxed max-w-xs" style={{ color: 'var(--text-muted)' }}>
+              An interactive mathematics explorer for T.Y.B.Sc. Data Science students at Smt. CHM College, covering Unit I & II of Basics of Mathematics in Real Life-IV.
+            </p>
+            <p className="text-xs" style={{ color: 'var(--text-faint)' }}>
+              Internal Assessment Project · Academic Year 2025–26
             </p>
           </div>
 
@@ -71,89 +72,81 @@ export const Footer: React.FC<FooterProps> = ({ setActivePage }) => {
           <div className="space-y-4">
             <h4
               className="text-xs font-bold uppercase tracking-widest"
-              style={{ color: 'rgba(108,99,255,0.8)' }}
+              style={{ color: 'var(--text-faint)' }}
             >
-              Quick Links
+              Navigation
             </h4>
             <ul className="space-y-2">
               {links.map(link => (
                 <li key={link.page}>
                   <button
                     onClick={() => navigate(link.page)}
-                    className="text-sm font-medium transition-all cursor-pointer"
+                    className="text-sm cursor-pointer"
                     style={{
-                      color: 'rgba(100,116,139,0.9)',
-                      background: 'none',
-                      border: 'none',
-                      padding: 0,
+                      background: 'none', border: 'none', padding: 0,
+                      color: 'var(--text-muted)',
+                      fontFamily: "'Inter', sans-serif",
                     }}
-                    onMouseEnter={e => {
-                      (e.currentTarget as HTMLElement).style.color = '#a5b4fc';
-                    }}
-                    onMouseLeave={e => {
-                      (e.currentTarget as HTMLElement).style.color = 'rgba(100,116,139,0.9)';
-                    }}
+                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = 'var(--accent-primary)'}
+                    onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)'}
                   >
-                    → {link.label}
+                    {link.label}
                   </button>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Academic Info */}
+          {/* Modules */}
           <div className="space-y-4">
             <h4
               className="text-xs font-bold uppercase tracking-widest"
-              style={{ color: 'rgba(108,99,255,0.8)' }}
+              style={{ color: 'var(--text-faint)' }}
             >
-              Academic Info
+              Calculators
             </h4>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <BookOpen className="w-4 h-4 shrink-0" style={{ color: '#6C63FF' }} />
-                <span className="text-xs" style={{ color: 'rgba(100,116,139,0.9)' }}>
-                  Basics of Mathematics in Real Life-IV
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Layers className="w-4 h-4 shrink-0" style={{ color: '#A855F7' }} />
-                <span className="text-xs" style={{ color: 'rgba(100,116,139,0.9)' }}>
-                  T.Y.B.Sc. Data Science | Sem-V | 2026–2027
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <ExternalLink className="w-4 h-4 shrink-0" style={{ color: '#10B981' }} />
-                <a
-                  href="https://github.com/priyanshusingh0810/maths-project"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs transition-colors"
-                  style={{ color: 'rgba(100,116,139,0.9)' }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#6ee7b7'; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'rgba(100,116,139,0.9)'; }}
-                >
-                  priyanshusingh0810/maths-project
-                </a>
-              </div>
-            </div>
+            <ul className="space-y-2">
+              {modules.map(mod => (
+                <li key={mod.page}>
+                  <button
+                    onClick={() => navigate(mod.page)}
+                    className="text-sm cursor-pointer"
+                    style={{
+                      background: 'none', border: 'none', padding: 0,
+                      color: 'var(--text-muted)',
+                      fontFamily: "'Inter', sans-serif",
+                    }}
+                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = 'var(--accent-primary)'}
+                    onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)'}
+                  >
+                    {mod.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
         {/* Bottom Bar */}
         <div
-          className="mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs"
-          style={{
-            borderTop: '1px solid rgba(255,255,255,0.04)',
-            color: 'rgba(71,85,105,0.8)',
-          }}
+          className="mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4"
+          style={{ borderTop: '1px solid var(--border-default)' }}
         >
-          <span>
-            © {new Date().getFullYear()} T.Y.B.Sc. Data Science — Internal Assessment Project
-          </span>
-          <span>
-            Smt. Chandibai Himathmal Mansukhani College (Autonomous), Ulhasnagar
-          </span>
+          <p className="text-xs" style={{ color: 'var(--text-faint)' }}>
+            © 2025 Math in Action — Smt. CHM College (Autonomous), Ulhasnagar
+          </p>
+          <div className="flex items-center gap-2">
+            <span
+              className="text-[10px] font-semibold uppercase tracking-widest px-2.5 py-1 rounded"
+              style={{
+                background: 'var(--glow-primary)',
+                border: '1px solid var(--border-glow)',
+                color: 'var(--accent-primary)',
+              }}
+            >
+              T.Y.B.Sc. Data Science
+            </span>
+          </div>
         </div>
       </div>
     </footer>

@@ -5,6 +5,8 @@ import { SolutionPanel } from '../components/SolutionPanel';
 import { RealLifeApplications } from '../components/RealLifeApplications';
 import { MathFormula } from '../components/MathFormula';
 import { Play, RotateCcw, HelpCircle, ArrowRight, Loader2, Layers } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { SimulationSegment } from '../components/SimulationSegment';
 
 export const CombinationModule: React.FC = () => {
   const [nStr, setNStr] = useState<string>('');
@@ -275,12 +277,59 @@ export const CombinationModule: React.FC = () => {
                 </div>
               </div>
 
-              {/* Combination slots vs permutations comparison visual */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                  Selection Bag Visual Representation
-                </h3>
-                {renderCombinationComparison(parseInt(nStr, 10), parseInt(rStr, 10))}
+              {/* Simulation Visualizer */}
+              <div className="space-y-4 animate-fade-up" style={{ animationDelay: '0.1s' }}>
+                <SimulationSegment 
+                  title="Binomial Combination Distribution"
+                  description={`Pascal's Triangle Row: Comparing nCr values for a fixed n = ${nStr}`}
+                >
+                  <div className="flex flex-col gap-6 w-full">
+                    <div className="h-64 w-full mt-4">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={(() => {
+                          const n = parseInt(nStr, 10);
+                          const fact = (num: number): number => num <= 1 ? 1 : num * fact(num - 1);
+                          return Array.from({ length: n + 1 }).map((_, x) => ({
+                            rVal: x,
+                            combinations: fact(n) / (fact(x) * fact(n - x))
+                          }));
+                        })()}>
+                          <XAxis dataKey="rVal" stroke="#10b981" tick={{ fill: '#10b981' }} />
+                          <YAxis 
+                            tickFormatter={(value) => value > 10000 ? value.toExponential(1) : value.toString()}
+                            stroke="#10b981" 
+                            tick={{ fill: '#10b981' }} 
+                            width={60} 
+                          />
+                          <Tooltip 
+                            contentStyle={{ backgroundColor: 'rgba(15, 23, 42, 0.9)', borderColor: 'rgba(16, 185, 129, 0.3)', borderRadius: '12px', color: '#fff' }}
+                            itemStyle={{ color: '#a7f3d0' }}
+                            formatter={(value: any) => [Number(value).toLocaleString(), 'Combinations (nCr)']}
+                            labelFormatter={(label) => `Choosing r = ${label}`}
+                          />
+                          <Bar 
+                            dataKey="combinations" 
+                            fill="#10b981" 
+                            radius={[4, 4, 0, 0]} 
+                            animationDuration={1500}
+                          >
+                            {(() => {
+                              const n = parseInt(nStr, 10);
+                              const targetR = parseInt(rStr, 10);
+                              return Array.from({ length: n + 1 }).map((_, index) => (
+                                <Cell key={`cell-${index}`} fill={index === targetR ? '#8b5cf6' : '#10b981'} />
+                              ));
+                            })()}
+                          </Bar>
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </div>
+
+                    <div className="border-t border-slate-200/20 dark:border-slate-800 pt-4">
+                      {renderCombinationComparison(parseInt(nStr, 10), parseInt(rStr, 10))}
+                    </div>
+                  </div>
+                </SimulationSegment>
               </div>
 
               {/* Standard Educational Solution Panel */}
