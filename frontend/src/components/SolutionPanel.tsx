@@ -15,35 +15,33 @@ interface StepProps {
   number: number;
   label: string;
   icon: React.ReactNode;
-  color: string;
-  borderColor: string;
+  colorVar: string;
   children: React.ReactNode;
 }
 
-const Step: React.FC<StepProps> = ({ number, label, icon, color, borderColor, children }) => (
+const Step: React.FC<StepProps> = ({ number, label, icon, colorVar, children }) => (
   <div className="relative flex gap-4">
     {/* Step Number Circle */}
     <div className="flex flex-col items-center shrink-0">
       <div
         className="w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm shrink-0 z-10"
         style={{
-          background: `${color}20`,
-          border: `2px solid ${borderColor}`,
-          color: color,
+          background: `color-mix(in srgb, var(--${colorVar}) 20%, transparent)`,
+          border: `2px solid color-mix(in srgb, var(--${colorVar}) 40%, transparent)`,
+          color: `var(--${colorVar})`,
         }}
       >
         {number}
       </div>
-      {/* connector line — purely decorative, last step won't have one but it's hidden naturally */}
     </div>
 
     {/* Content */}
     <div className="flex-1 pb-8">
       <div className="flex items-center gap-2 mb-3">
-        <span style={{ color }}>{icon}</span>
+        <span style={{ color: `var(--${colorVar})` }}>{icon}</span>
         <h4
           className="text-xs font-bold uppercase tracking-widest"
-          style={{ color }}
+          style={{ color: `var(--${colorVar})` }}
         >
           {label}
         </h4>
@@ -65,17 +63,13 @@ export const SolutionPanel: React.FC<SolutionPanelProps> = ({
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center gap-3 pb-4" style={{ borderBottom: '1px solid rgba(108,99,255,0.15)' }}>
+      <div className="flex items-center gap-3 pb-4 border-b border-[var(--border-default)]">
         <div
-          className="w-9 h-9 rounded-xl flex items-center justify-center"
-          style={{ background: 'rgba(108,99,255,0.15)', border: '1px solid rgba(108,99,255,0.3)' }}
+          className="w-9 h-9 rounded-xl flex items-center justify-center bg-[var(--glow-primary)] border border-[var(--border-glow)]"
         >
-          <BookOpen className="w-5 h-5" style={{ color: '#a5b4fc' }} />
+          <BookOpen className="w-5 h-5 text-[var(--accent-primary)]" />
         </div>
-        <h3
-          className="text-lg font-extrabold"
-          style={{ color: 'rgba(241,245,249,0.95)', fontFamily: "'Outfit', sans-serif" }}
-        >
+        <h3 className="text-lg font-extrabold text-[var(--text-primary)]" style={{ fontFamily: "'Outfit', sans-serif" }}>
           Step-by-Step Educational Solution
         </h3>
       </div>
@@ -88,15 +82,14 @@ export const SolutionPanel: React.FC<SolutionPanelProps> = ({
           number={1}
           label="Given Values"
           icon={<Sigma className="w-4 h-4" />}
-          color="#94a3b8"
-          borderColor="rgba(148,163,184,0.4)"
+          colorVar="accent-secondary"
         >
           <div
             className="px-4 py-3 rounded-xl font-mono text-sm inline-block"
             style={{
-              background: 'rgba(255,255,255,0.03)',
-              border: '1px solid rgba(255,255,255,0.08)',
-              color: 'rgba(226,232,240,0.9)',
+              background: 'var(--bg-surface)',
+              border: '1px solid var(--border-default)',
+              color: 'var(--text-primary)',
             }}
           >
             {given}
@@ -108,8 +101,7 @@ export const SolutionPanel: React.FC<SolutionPanelProps> = ({
           number={2}
           label="Mathematical Formula"
           icon={<Calculator className="w-4 h-4" />}
-          color="#a5b4fc"
-          borderColor="rgba(108,99,255,0.5)"
+          colorVar="accent-primary"
         >
           <div className="math-display-block inline-block">
             <MathFormula formula={formula} block />
@@ -122,8 +114,7 @@ export const SolutionPanel: React.FC<SolutionPanelProps> = ({
             number={3}
             label="Substitution"
             icon={<ArrowRightLeft className="w-4 h-4" />}
-            color="#c4b5fd"
-            borderColor="rgba(167,139,250,0.4)"
+            colorVar="accent-tertiary"
           >
             <div className="math-display-block inline-block">
               <MathFormula formula={substitution} block />
@@ -136,8 +127,7 @@ export const SolutionPanel: React.FC<SolutionPanelProps> = ({
           number={substitution ? 4 : 3}
           label="Calculation Steps"
           icon={<Calculator className="w-4 h-4" />}
-          color="#67e8f9"
-          borderColor="rgba(6,182,212,0.4)"
+          colorVar="accent-cyan"
         >
           <ul className="space-y-2">
             {calculationSteps.map((step, idx) => (
@@ -145,17 +135,17 @@ export const SolutionPanel: React.FC<SolutionPanelProps> = ({
                 key={idx}
                 className="flex items-start gap-3 px-4 py-3 rounded-xl text-sm transition-all duration-200"
                 style={{
-                  background: 'rgba(255,255,255,0.02)',
-                  border: '1px solid rgba(255,255,255,0.05)',
-                  color: 'rgba(203,213,225,0.9)',
+                  background: 'var(--bg-surface)',
+                  border: '1px solid var(--border-default)',
+                  color: 'var(--text-secondary)',
                 }}
                 onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.background = 'rgba(6,182,212,0.04)';
-                  (e.currentTarget as HTMLElement).style.borderColor = 'rgba(6,182,212,0.2)';
+                  (e.currentTarget as HTMLElement).style.background = 'color-mix(in srgb, var(--accent-cyan) 5%, transparent)';
+                  (e.currentTarget as HTMLElement).style.borderColor = 'color-mix(in srgb, var(--accent-cyan) 20%, transparent)';
                 }}
                 onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.02)';
-                  (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.05)';
+                  (e.currentTarget as HTMLElement).style.background = 'var(--bg-surface)';
+                  (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-default)';
                 }}
               >
                 <span
@@ -163,9 +153,9 @@ export const SolutionPanel: React.FC<SolutionPanelProps> = ({
                   style={{
                     width: '22px',
                     height: '22px',
-                    background: 'rgba(6,182,212,0.15)',
-                    border: '1px solid rgba(6,182,212,0.3)',
-                    color: '#67e8f9',
+                    background: 'color-mix(in srgb, var(--accent-cyan) 15%, transparent)',
+                    border: '1px solid color-mix(in srgb, var(--accent-cyan) 30%, transparent)',
+                    color: 'var(--accent-cyan)',
                   }}
                 >
                   {idx + 1}
@@ -181,25 +171,24 @@ export const SolutionPanel: React.FC<SolutionPanelProps> = ({
           number={substitution ? 5 : 4}
           label="Final Answer"
           icon={<Trophy className="w-4 h-4" />}
-          color="#34d399"
-          borderColor="rgba(16,185,129,0.5)"
+          colorVar="accent-emerald"
         >
-          <div className="result-highlight p-5 rounded-2xl flex items-center gap-4">
+          <div className="result-highlight p-5 rounded-2xl flex items-center gap-4" style={{ background: 'color-mix(in srgb, var(--accent-emerald) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--accent-emerald) 20%, transparent)' }}>
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
               style={{
-                background: 'rgba(16,185,129,0.2)',
-                border: '1px solid rgba(16,185,129,0.4)',
+                background: 'color-mix(in srgb, var(--accent-emerald) 20%, transparent)',
+                border: '1px solid color-mix(in srgb, var(--accent-emerald) 40%, transparent)',
               }}
             >
-              <Trophy className="w-5 h-5" style={{ color: '#34d399' }} />
+              <Trophy className="w-5 h-5" style={{ color: 'var(--accent-emerald)' }} />
             </div>
             <div
               className="text-2xl font-black"
               style={{
-                color: '#34d399',
+                color: 'var(--accent-emerald)',
                 fontFamily: "'Outfit', sans-serif",
-                textShadow: '0 0 20px rgba(16,185,129,0.4)',
+                textShadow: '0 0 20px color-mix(in srgb, var(--accent-emerald) 40%, transparent)',
               }}
             >
               {finalAnswer}
@@ -212,18 +201,17 @@ export const SolutionPanel: React.FC<SolutionPanelProps> = ({
           number={substitution ? 6 : 5}
           label="Mathematical Reasoning"
           icon={<Lightbulb className="w-4 h-4" />}
-          color="#c084fc"
-          borderColor="rgba(168,85,247,0.4)"
+          colorVar="accent-amber"
         >
           <div
             className="p-4 rounded-xl text-sm leading-relaxed flex gap-3"
             style={{
-              background: 'rgba(168,85,247,0.05)',
-              border: '1px solid rgba(168,85,247,0.15)',
-              color: 'rgba(203,213,225,0.9)',
+              background: 'color-mix(in srgb, var(--accent-amber) 10%, transparent)',
+              border: '1px solid color-mix(in srgb, var(--accent-amber) 20%, transparent)',
+              color: 'var(--text-secondary)',
             }}
           >
-            <Lightbulb className="w-5 h-5 shrink-0 mt-0.5" style={{ color: '#c084fc' }} />
+            <Lightbulb className="w-5 h-5 shrink-0 mt-0.5" style={{ color: 'var(--accent-amber)' }} />
             <p>{explanation}</p>
           </div>
         </Step>
@@ -232,3 +220,4 @@ export const SolutionPanel: React.FC<SolutionPanelProps> = ({
     </div>
   );
 };
+

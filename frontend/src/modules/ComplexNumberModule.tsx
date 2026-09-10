@@ -302,7 +302,7 @@ export const ComplexNumberModule: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Input Panel */}
-        <div className="lg:col-span-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-5 self-start">
+        <div className="lg:col-span-1 glass-card p-6  space-y-5 self-start">
           <h2 className="text-lg font-bold text-slate-900 dark:text-white">
             Calculator Parameters
           </h2>
@@ -317,7 +317,7 @@ export const ComplexNumberModule: React.FC = () => {
                 id="operation-select"
                 value={operation}
                 onChange={(e) => setOperation(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2.5 text-sm font-bold text-slate-850 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="input-glow w-full px-4 py-3 text-sm font-semibold"
               >
                 <option value="add">Addition (z1 + z2)</option>
                 <option value="sub">Subtraction (z1 - z2)</option>
@@ -423,14 +423,14 @@ export const ComplexNumberModule: React.FC = () => {
             <div className="flex gap-2">
               <button
                 onClick={loadExample}
-                className="flex-1 py-2.5 bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-slate-850 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1 cursor-pointer"
+                className="btn-outline-glow flex-1 flex items-center justify-center gap-1 cursor-pointer py-2"
               >
                 <Play className="w-3 h-3 text-emerald-500 fill-emerald-500" />
                 Try Example
               </button>
               <button
                 onClick={handleReset}
-                className="py-2.5 px-3 bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-850 rounded-xl font-semibold text-xs transition-all flex items-center justify-center cursor-pointer"
+                className="btn-outline-glow px-3 py-2 flex items-center justify-center cursor-pointer"
                 title="Reset Inputs"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
@@ -442,7 +442,7 @@ export const ComplexNumberModule: React.FC = () => {
         {/* Output Panel / Visualization */}
         <div className="lg:col-span-2 space-y-8">
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start glass-card p-6 sm:p-8 ">
             
             {/* Left Col: Coordinate Visualization */}
             <div className="space-y-4 flex flex-col w-full">
@@ -505,7 +505,7 @@ export const ComplexNumberModule: React.FC = () => {
           </div>
 
           {response && (
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-8">
+            <div className="glass-card p-6 sm:p-8  space-y-8">
               <SolutionPanel
                 given={
                   <div>

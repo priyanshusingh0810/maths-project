@@ -4,23 +4,23 @@ import { HelpCircle, Layers, Play, CheckCircle2, RefreshCw, Smartphone } from 'l
 const sections = [
   {
     icon: Layers,
-    color: '#6C63FF',
+    colorVar: 'accent-primary',
     title: '1. Navigating the Mathematics Dashboard',
     content: (
-      <p className="text-sm leading-relaxed" style={{ color: 'rgba(148,163,184,0.9)' }}>
-        Use the top navigation bar to toggle between the <strong style={{ color: '#a5b4fc' }}>Home Page</strong>, the{' '}
-        <strong style={{ color: '#a5b4fc' }}>All Modules Dashboard</strong>, or specific Units. You can also view
-        semantic concept formulations on the <strong style={{ color: '#a5b4fc' }}>Concepts Page</strong>.
+      <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+        Use the top navigation bar to toggle between the <strong className="text-[var(--accent-primary)]">Home Page</strong>, the{' '}
+        <strong className="text-[var(--accent-primary)]">All Modules Dashboard</strong>, or specific Units. You can also view
+        semantic concept formulations on the <strong className="text-[var(--accent-primary)]">Concepts Page</strong>.
       </p>
     ),
   },
   {
     icon: Play,
-    color: '#10B981',
+    colorVar: 'accent-secondary',
     title: '2. Using "Demo Examples" Mode',
     content: (
-      <p className="text-sm leading-relaxed" style={{ color: 'rgba(148,163,184,0.9)' }}>
-        Each calculator has a <strong style={{ color: '#34d399' }}>"Try Example"</strong> preset button that
+      <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+        Each calculator has a <strong className="text-[var(--accent-secondary)]">"Try Example"</strong> preset button that
         pre-populates all inputs with optimal demonstration values — e.g., GCD of 48 & 18, modular congruence
         modulus 12, limits of holes — to demo immediately during vivas or presentations.
       </p>
@@ -28,7 +28,7 @@ const sections = [
   },
   {
     icon: RefreshCw,
-    color: '#A855F7',
+    colorVar: 'accent-tertiary',
     title: '3. Interacting with Math Visualizations',
     content: (
       <div className="space-y-3">
@@ -41,14 +41,10 @@ const sections = [
         ].map((item, i) => (
           <div
             key={i}
-            className="p-3 rounded-xl text-sm"
-            style={{
-              background: 'rgba(168,85,247,0.05)',
-              border: '1px solid rgba(168,85,247,0.12)',
-            }}
+            className="p-3 rounded-xl text-sm bg-[var(--bg-surface)] border border-[var(--border-default)]"
           >
-            <strong style={{ color: '#c084fc' }}>{item.title}:</strong>{' '}
-            <span style={{ color: 'rgba(148,163,184,0.9)' }}>{item.desc}</span>
+            <strong className="text-[var(--accent-tertiary)]">{item.title}:</strong>{' '}
+            <span className="text-[var(--text-secondary)]">{item.desc}</span>
           </div>
         ))}
       </div>
@@ -56,7 +52,7 @@ const sections = [
   },
   {
     icon: CheckCircle2,
-    color: '#06B6D4',
+    colorVar: 'accent-cyan',
     title: '4. Robust Input Validations & Error States',
     content: (
       <ul className="space-y-2">
@@ -66,8 +62,8 @@ const sections = [
           'Complex Operations: Division by zero is detected and blocked with clear notices.',
           'Calculus limits: Functions must be mathematically evaluable. Asymptotes are identified and labelled.',
         ].map((item, i) => (
-          <li key={i} className="flex items-start gap-2 text-sm" style={{ color: 'rgba(148,163,184,0.9)' }}>
-            <span style={{ color: '#67e8f9', marginTop: '2px', flexShrink: 0 }}>→</span>
+          <li key={i} className="flex items-start gap-2 text-sm text-[var(--text-secondary)]">
+            <span className="text-[var(--accent-cyan)] mt-[2px] shrink-0">→</span>
             {item}
           </li>
         ))}
@@ -76,10 +72,10 @@ const sections = [
   },
   {
     icon: Smartphone,
-    color: '#F59E0B',
+    colorVar: 'accent-amber',
     title: '5. Accessibility & Responsiveness',
     content: (
-      <p className="text-sm leading-relaxed" style={{ color: 'rgba(148,163,184,0.9)' }}>
+      <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
         The application is fully responsive for laptops, tablets, and phones. All interactive SVG graphs are
         scalable and adapt to small layout widths automatically.
       </p>
@@ -94,22 +90,19 @@ export const Help: React.FC = () => {
       {/* Page Header */}
       <div className="text-center space-y-4 animate-fade-up">
         <div
-          className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto"
+          className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto bg-[var(--glow-primary)] border border-[var(--border-glow)]"
           style={{
-            background: 'linear-gradient(135deg, rgba(108,99,255,0.2), rgba(168,85,247,0.15))',
-            border: '1px solid rgba(108,99,255,0.3)',
-            boxShadow: '0 8px 30px rgba(108,99,255,0.2)',
+            boxShadow: '0 8px 30px var(--glow-primary)',
           }}
         >
-          <HelpCircle className="w-7 h-7" style={{ color: '#a5b4fc' }} />
+          <HelpCircle className="w-7 h-7 text-[var(--accent-primary)]" />
         </div>
         <h1
-          className="section-heading text-4xl sm:text-5xl font-black"
-          style={{ color: 'rgba(241,245,249,0.95)' }}
+          className="section-heading text-4xl sm:text-5xl font-black text-[var(--text-primary)]"
         >
           Help & <span className="gradient-text-static">Documentation</span>
         </h1>
-        <p className="text-sm max-w-xl mx-auto" style={{ color: 'rgba(100,116,139,0.9)' }}>
+        <p className="text-sm max-w-xl mx-auto text-[var(--text-muted)]">
           Learn how to interact with calculators, adjust visualizations, and interpret mathematical solutions.
         </p>
       </div>
@@ -127,15 +120,15 @@ export const Help: React.FC = () => {
                 <div
                   className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
                   style={{
-                    background: `${section.color}18`,
-                    border: `1px solid ${section.color}30`,
+                    background: `color-mix(in srgb, var(--${section.colorVar}) 15%, transparent)`,
+                    border: `1px solid color-mix(in srgb, var(--${section.colorVar}) 30%, transparent)`,
                   }}
                 >
-                  <IconComponent className="w-5 h-5" style={{ color: section.color }} />
+                  <IconComponent className="w-5 h-5" style={{ color: `var(--${section.colorVar})` }} />
                 </div>
                 <h2
-                  className="text-lg font-bold"
-                  style={{ color: 'rgba(241,245,249,0.95)', fontFamily: "'Outfit', sans-serif" }}
+                  className="text-lg font-bold text-[var(--text-primary)]"
+                  style={{ fontFamily: "'Outfit', sans-serif" }}
                 >
                   {section.title}
                 </h2>
@@ -148,3 +141,4 @@ export const Help: React.FC = () => {
     </div>
   );
 };
+

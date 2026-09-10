@@ -7,35 +7,6 @@ import { MathFormula } from '../components/MathFormula';
 import { Play, RotateCcw, HelpCircle, Check, Loader2, Binary } from 'lucide-react';
 import { SimulationSegment } from '../components/SimulationSegment';
 
-// Shared dark-theme module styles
-const moduleStyles = {
-  page: { backgroundColor: 'transparent', color: 'var(--text-primary)' },
-  inputCard: {
-    background: 'rgba(15, 22, 45, 0.8)',
-    border: '1px solid rgba(108,99,255,0.15)',
-    borderRadius: '20px',
-    padding: '24px',
-  },
-  outputCard: {
-    background: 'rgba(15, 22, 45, 0.8)',
-    border: '1px solid rgba(108,99,255,0.15)',
-    borderRadius: '20px',
-    padding: '32px',
-  },
-  resultBox: {
-    background: 'linear-gradient(135deg, rgba(16,185,129,0.08), rgba(6,182,212,0.06))',
-    border: '1px solid rgba(16,185,129,0.25)',
-    borderRadius: '16px',
-    padding: '24px',
-  },
-  emptyCard: {
-    background: 'rgba(15, 22, 45, 0.6)',
-    border: '1px solid rgba(255,255,255,0.05)',
-    borderRadius: '20px',
-    padding: '48px 24px',
-    textAlign: 'center' as const,
-  },
-};
 
 export const GCDModule: React.FC = () => {
   const [aStr, setAStr] = useState<string>('');
@@ -86,17 +57,17 @@ export const GCDModule: React.FC = () => {
       {/* Module Title Header */}
       <div
         className="animate-fade-up pb-6"
-        style={{ borderBottom: '1px solid rgba(108,99,255,0.12)' }}
+        style={{ borderBottom: '1px solid var(--border-default)' }}
       >
         <span className="neon-pill neon-pill-indigo mb-3 inline-flex">Unit I · Number Theory</span>
         <h1
           className="section-heading text-3xl sm:text-4xl font-black mt-2"
-          style={{ color: 'rgba(241,245,249,0.95)' }}
+          style={{ color: 'var(--text-primary)' }}
         >
           GCD Calculator —{' '}
           <span className="gradient-text-static">Euclidean Algorithm</span>
         </h1>
-        <p className="text-sm mt-2 max-w-2xl" style={{ color: 'rgba(100,116,139,0.9)' }}>
+        <p className="text-sm mt-2 max-w-2xl" style={{ color: 'var(--text-muted)' }}>
           Find the Greatest Common Divisor using the classical Euclidean division remainder method, illustrated through modular step progression.
         </p>
       </div>
@@ -104,10 +75,10 @@ export const GCDModule: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
         {/* Input Panel */}
-        <div className="lg:col-span-1 self-start animate-fade-up delay-100" style={moduleStyles.inputCard}>
+        <div className="lg:col-span-1 self-start animate-fade-up delay-100 glass-card p-6">
           <h2
             className="font-extrabold text-base mb-5"
-            style={{ color: 'rgba(241,245,249,0.95)', fontFamily: "'Outfit', sans-serif" }}
+            style={{ color: 'var(--text-primary)', fontFamily: "'Outfit', sans-serif" }}
           >
             Calculator Inputs
           </h2>
@@ -117,7 +88,7 @@ export const GCDModule: React.FC = () => {
               <label
                 htmlFor="gcd-input-a"
                 className="block text-xs font-bold uppercase tracking-wider mb-2"
-                style={{ color: 'rgba(100,116,139,0.9)' }}
+                style={{ color: 'var(--text-muted)' }}
               >
                 First Integer (a)
               </label>
@@ -135,7 +106,7 @@ export const GCDModule: React.FC = () => {
               <label
                 htmlFor="gcd-input-b"
                 className="block text-xs font-bold uppercase tracking-wider mb-2"
-                style={{ color: 'rgba(100,116,139,0.9)' }}
+                style={{ color: 'var(--text-muted)' }}
               >
                 Second Integer (b)
               </label>
@@ -157,7 +128,7 @@ export const GCDModule: React.FC = () => {
               style={{
                 background: 'rgba(239,68,68,0.1)',
                 border: '1px solid rgba(239,68,68,0.3)',
-                color: '#fca5a5',
+                color: 'var(--accent-emerald)',
               }}
             >
               {error}
@@ -178,25 +149,15 @@ export const GCDModule: React.FC = () => {
               <button
                 id="gcd-example"
                 onClick={loadExample}
-                className="flex-1 py-2.5 rounded-xl font-semibold text-xs flex items-center justify-center gap-1 transition-all cursor-pointer"
-                style={{
-                  background: 'rgba(16,185,129,0.1)',
-                  border: '1px solid rgba(16,185,129,0.25)',
-                  color: '#6ee7b7',
-                }}
+                className="btn-outline-glow flex-1 flex items-center justify-center gap-1 cursor-pointer py-2"
               >
-                <Play className="w-3 h-3 fill-current" />
+                <Play className="w-3 h-3 text-emerald-500 fill-emerald-500" />
                 Try Example
               </button>
               <button
                 id="gcd-reset"
                 onClick={handleReset}
-                className="py-2.5 px-3 rounded-xl font-semibold text-xs flex items-center justify-center cursor-pointer transition-all"
-                style={{
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  color: 'rgba(100,116,139,0.8)',
-                }}
+                className="btn-outline-glow px-3 py-2 flex items-center justify-center cursor-pointer"
                 title="Reset Inputs"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
@@ -208,26 +169,26 @@ export const GCDModule: React.FC = () => {
         {/* Output Panel */}
         <div className="lg:col-span-2 space-y-8">
           {response ? (
-            <div className="animate-fade-up space-y-8" style={moduleStyles.outputCard}>
+            <div className="animate-fade-up space-y-8 glass-card p-8">
 
               {/* Result */}
-              <div className="text-center space-y-2" style={moduleStyles.resultBox}>
+              <div className="text-center space-y-2 glass-card-inner p-6">
                 <span
                   className="text-[10px] font-black uppercase tracking-wider"
-                  style={{ color: 'rgba(100,116,139,0.8)' }}
+                  style={{ color: 'var(--text-muted)' }}
                 >
                   Greatest Common Divisor
                 </span>
                 <div
                   className="section-heading text-5xl font-black"
                   style={{
-                    color: '#34d399',
+                    color: 'var(--accent-secondary)',
                     textShadow: '0 0 30px rgba(16,185,129,0.4)',
                   }}
                 >
                   {response.result}
                 </div>
-                <div className="text-xs" style={{ color: 'rgba(100,116,139,0.7)' }}>
+                <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
                   <MathFormula formula={`\\gcd(${aStr}, ${bStr}) = ${response.result}`} />
                 </div>
               </div>
@@ -247,11 +208,11 @@ export const GCDModule: React.FC = () => {
                         className="p-4 rounded-2xl transition-all duration-200"
                         style={{
                           background: isLast
-                            ? 'rgba(16,185,129,0.08)'
-                            : 'rgba(255,255,255,0.02)',
+                            ? 'var(--glow-secondary)'
+                            : 'var(--bg-card)',
                           border: isLast
-                            ? '1px solid rgba(16,185,129,0.3)'
-                            : '1px solid rgba(255,255,255,0.05)',
+                            ? '1px solid var(--accent-secondary)'
+                            : '1px solid var(--border-default)',
                           boxShadow: isLast ? '0 4px 20px rgba(16,185,129,0.1)' : 'none',
                         }}
                       >
@@ -259,9 +220,9 @@ export const GCDModule: React.FC = () => {
                           <span
                             className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
                             style={{
-                              background: isLast ? 'rgba(16,185,129,0.15)' : 'rgba(255,255,255,0.05)',
-                              color: isLast ? '#34d399' : 'rgba(100,116,139,0.8)',
-                              border: isLast ? '1px solid rgba(16,185,129,0.3)' : '1px solid rgba(255,255,255,0.06)',
+                              background: isLast ? 'var(--glow-secondary)' : 'var(--bg-card)',
+                              color: isLast ? 'var(--accent-secondary)' : 'var(--text-muted)',
+                              border: isLast ? '1px solid var(--accent-secondary)' : '1px solid var(--border-default)',
                             }}
                           >
                             Step {step.step_num}
@@ -269,7 +230,7 @@ export const GCDModule: React.FC = () => {
                           {isLast && (
                             <span
                               className="text-[10px] font-bold flex items-center gap-0.5"
-                              style={{ color: '#34d399' }}
+                              style={{ color: 'var(--accent-secondary)' }}
                             >
                               <Check className="w-3 h-3" />
                               GCD Found
@@ -278,23 +239,23 @@ export const GCDModule: React.FC = () => {
                         </div>
                         <div
                           className="font-mono text-base font-bold my-2"
-                          style={{ color: 'rgba(226,232,240,0.95)', fontFamily: "'JetBrains Mono', monospace" }}
+                          style={{ color: 'var(--text-primary)', fontFamily: "'JetBrains Mono', monospace" }}
                         >
                           {step.equation}
                         </div>
                         <div
                           className="flex justify-between text-xs pt-2"
                           style={{
-                            borderTop: '1px solid rgba(255,255,255,0.05)',
-                            color: 'rgba(100,116,139,0.8)',
+                            borderTop: '1px solid var(--border-default)',
+                            color: 'var(--text-muted)',
                           }}
                         >
-                          <span>Quotient: <strong style={{ color: 'rgba(203,213,225,0.9)' }}>{step.quotient}</strong></span>
+                          <span>Quotient: <strong style={{ color: 'var(--text-primary)' }}>{step.quotient}</strong></span>
                           <span>
                             Remainder:{' '}
                             <strong
                               style={{
-                                color: isLast ? '#34d399' : '#a5b4fc',
+                                color: isLast ? 'var(--accent-secondary)' : 'var(--accent-primary)',
                                 fontFamily: "'JetBrains Mono', monospace",
                               }}
                             >
@@ -324,16 +285,10 @@ export const GCDModule: React.FC = () => {
               <RealLifeApplications applications={response.real_life_applications} />
 
               {/* What did we learn? */}
-              <div
-                className="p-5 rounded-2xl space-y-3"
-                style={{
-                  background: 'rgba(108,99,255,0.05)',
-                  border: '1px solid rgba(108,99,255,0.15)',
-                }}
-              >
+              <div className="glass-card-inner p-5 space-y-3">
                 <h4
                   className="font-bold text-sm flex items-center gap-1.5"
-                  style={{ color: '#a5b4fc' }}
+                  style={{ color: 'var(--accent-primary)' }}
                 >
                   <HelpCircle className="w-4 h-4" />
                   What did we learn?
@@ -348,9 +303,9 @@ export const GCDModule: React.FC = () => {
                     <li
                       key={i}
                       className="flex items-start gap-2 text-xs leading-relaxed"
-                      style={{ color: 'rgba(148,163,184,0.9)' }}
+                      style={{ color: 'var(--text-muted)' }}
                     >
-                      <span style={{ color: '#6C63FF', marginTop: '2px', flexShrink: 0 }}>→</span>
+                      <span style={{ color: 'var(--accent-primary)', marginTop: '2px', flexShrink: 0 }}>→</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -358,20 +313,20 @@ export const GCDModule: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="animate-fade-up" style={moduleStyles.emptyCard}>
+            <div className="animate-fade-up glass-card p-12 text-center">
               <Binary
                 className="w-16 h-16 mx-auto mb-4"
-                style={{ color: 'rgba(108,99,255,0.3)', animation: 'float 4s ease-in-out infinite' }}
+                style={{ color: 'var(--glow-primary)', animation: 'float 4s ease-in-out infinite' }}
               />
               <h3
                 className="text-xl font-bold mb-2"
-                style={{ color: 'rgba(241,245,249,0.8)', fontFamily: "'Outfit', sans-serif" }}
+                style={{ color: 'var(--text-primary)', fontFamily: "'Outfit', sans-serif" }}
               >
                 No Calculations Yet
               </h3>
-              <p className="text-sm" style={{ color: 'rgba(100,116,139,0.8)' }}>
+              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
                 Enter two integers in the input panel or click{' '}
-                <span style={{ color: '#6ee7b7' }}>Try Example</span> to start.
+                <span style={{ color: 'var(--accent-secondary)' }}>Try Example</span> to start.
               </p>
             </div>
           )}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Binary, CircleDot, Compass, Shuffle, Layers, Activity, ArrowRight, LayoutGrid, BookOpen } from 'lucide-react';
+import { motion, AnimatePresence, type Variants } from 'framer-motion';
 
 interface ModulesDashboardProps {
   setActivePage: (page: string) => void;
@@ -7,16 +8,29 @@ interface ModulesDashboardProps {
   setUnitFilter: (unit: 'all' | 'unit1' | 'unit2') => void;
 }
 
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } },
+};
+
 export const ModulesDashboard: React.FC<ModulesDashboardProps> = ({
   setActivePage,
   unitFilter,
   setUnitFilter,
 }) => {
   const stats = [
-    { label: 'Syllabus Units', value: '2', detail: 'Unit I & Unit II', color: 'var(--accent-primary)' },
-    { label: 'Math Modules', value: '6', detail: 'Fully Functional', color: 'var(--accent-secondary)' },
-    { label: 'Visualizations', value: '6', detail: 'Circles, Planes, Graphs', color: 'var(--accent-emerald)' },
-    { label: 'Solution Steps', value: '∞', detail: 'With KaTeX LaTeX', color: 'var(--accent-amber)' },
+    { label: 'Syllabus Units', value: '2', detail: 'Unit I & Unit II', color: 'var(--accent-primary)', glow: 'var(--glow-primary)' },
+    { label: 'Math Modules', value: '6', detail: 'Fully Functional', color: 'var(--accent-secondary)', glow: 'var(--glow-secondary)' },
+    { label: 'Visualizations', value: '6', detail: 'Circles, Planes, Graphs', color: 'var(--accent-emerald)', glow: 'var(--glow-emerald)' },
+    { label: 'Solution Steps', value: '∞', detail: 'With KaTeX LaTeX', color: 'var(--accent-amber)', glow: 'var(--glow-amber)' },
   ];
 
   const unit1Modules = [
@@ -26,9 +40,8 @@ export const ModulesDashboard: React.FC<ModulesDashboardProps> = ({
       subtitle: 'Euclidean Algorithm',
       desc: 'Calculate GCD of two numbers and visualize the division process step-by-step.',
       icon: Binary,
-      gradient: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))',
+      color: 'var(--accent-primary)',
       glow: 'var(--glow-primary)',
-      pill: 'neon-pill-indigo',
     },
     {
       id: 'congruence',
@@ -36,9 +49,8 @@ export const ModulesDashboard: React.FC<ModulesDashboardProps> = ({
       subtitle: 'Modular Arithmetic',
       desc: 'Check congruency status, calculate modulo remainders, and inspect a modular number-circle.',
       icon: CircleDot,
-      gradient: 'linear-gradient(135deg, var(--accent-secondary), var(--accent-primary))',
+      color: 'var(--accent-secondary)',
       glow: 'var(--glow-secondary)',
-      pill: 'neon-pill-indigo',
     },
     {
       id: 'complex',
@@ -46,9 +58,8 @@ export const ModulesDashboard: React.FC<ModulesDashboardProps> = ({
       subtitle: 'Coordinate Geometry & Vectors',
       desc: 'Perform complex arithmetic operations and plot numbers dynamically on the complex plane.',
       icon: Compass,
-      gradient: 'linear-gradient(135deg, var(--accent-cyan), var(--accent-primary))',
-      glow: 'var(--glow-primary)',
-      pill: 'neon-pill-indigo',
+      color: 'var(--accent-tertiary)',
+      glow: 'var(--glow-tertiary)',
     },
   ];
 
@@ -59,9 +70,8 @@ export const ModulesDashboard: React.FC<ModulesDashboardProps> = ({
       subtitle: 'Arrangements (Order Matters)',
       desc: 'Compute nPr values and visualize permutation slot arrangements.',
       icon: Shuffle,
-      gradient: 'linear-gradient(135deg, var(--accent-emerald), var(--accent-cyan))',
+      color: 'var(--accent-emerald)',
       glow: 'var(--glow-emerald)',
-      pill: 'neon-pill-indigo',
     },
     {
       id: 'combination',
@@ -69,9 +79,8 @@ export const ModulesDashboard: React.FC<ModulesDashboardProps> = ({
       subtitle: 'Selections (Order Irrelevant)',
       desc: 'Compute nCr values and see selection groupings compared against permutations.',
       icon: Layers,
-      gradient: 'linear-gradient(135deg, var(--accent-tertiary), var(--accent-primary))',
-      glow: 'var(--glow-primary)',
-      pill: 'neon-pill-indigo',
+      color: 'var(--accent-cyan)',
+      glow: 'var(--glow-cyan)',
     },
     {
       id: 'limit',
@@ -79,199 +88,218 @@ export const ModulesDashboard: React.FC<ModulesDashboardProps> = ({
       subtitle: 'Calculus Foundations',
       desc: 'Solve left/right/two-sided limits of expressions using SymPy and visualize dynamic coordinates.',
       icon: Activity,
-      gradient: 'linear-gradient(135deg, var(--accent-amber), var(--accent-tertiary))',
-      glow: 'var(--glow-secondary)',
-      pill: 'neon-pill-indigo',
+      color: 'var(--accent-amber)',
+      glow: 'var(--glow-amber)',
     },
   ];
 
   const renderModuleCard = (m: typeof unit1Modules[0]) => {
     const IconComponent = m.icon;
     return (
-      <div
+      <motion.div
+        variants={itemVariants}
+        whileHover={{ y: -5, scale: 1.02 }}
         key={m.id}
-        className="glass-card flex flex-col"
-        style={{ padding: '24px' }}
+        className="mouse-glow-container glass-card flex flex-col p-6 cursor-pointer group"
+        onClick={() => setActivePage(m.id)}
       >
-        <div className="flex items-start gap-3 mb-5">
+        <div className="flex items-start gap-4 mb-5">
           <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center icon-glow shrink-0"
-            style={{
-              background: m.gradient,
-              boxShadow: `0 4px 12px ${m.glow}`,
-            }}
+            className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 border border-[var(--border-default)] group-hover:border-[var(--border-glow)] transition-all duration-300 bg-[var(--bg-secondary)]"
+            style={{ boxShadow: `0 0 20px ${m.glow}` }}
           >
-            <IconComponent className="w-5 h-5" style={{ color: '#ffffff' }} />
+            <IconComponent className="w-6 h-6" style={{ color: m.color }} />
           </div>
           <div>
-            <h3
-              className="font-bold text-sm leading-tight mb-1"
-              style={{ color: 'var(--text-primary)', fontFamily: "'Inter', sans-serif" }}
-            >
+            <h3 className="font-extrabold text-lg leading-tight mb-1 text-[var(--text-primary)]">
               {m.name}
             </h3>
-            <span
-              className="text-[10px] font-semibold uppercase tracking-wider"
-              style={{ color: 'var(--text-faint)' }}
-            >
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-faint)] group-hover:text-[var(--text-muted)] transition-colors">
               {m.subtitle}
             </span>
           </div>
         </div>
 
-        <p
-          className="text-sm leading-relaxed flex-1 mb-5"
-          style={{ color: 'var(--text-muted)' }}
-        >
+        <p className="text-sm leading-relaxed flex-1 mb-6 text-[var(--text-muted)] group-hover:text-[var(--text-secondary)] transition-colors">
           {m.desc}
         </p>
 
-        <button
-          onClick={() => setActivePage(m.id)}
-          id={`dashboard-btn-${m.id}`}
-          className="w-full btn-outline-glow text-sm flex items-center justify-center gap-2 group"
-          style={{ padding: '10px', marginTop: 'auto' }}
-        >
-          Open Calculator
-          <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-        </button>
-      </div>
+        <div className="mt-auto flex items-center justify-between text-sm font-bold" style={{ color: m.color }}>
+          <span>Open Calculator</span>
+          <div 
+            className="w-8 h-8 rounded-full flex items-center justify-center group-hover:translate-x-2 transition-transform duration-300"
+            style={{ backgroundColor: m.glow }}
+          >
+            <ArrowRight className="w-4 h-4" />
+          </div>
+        </div>
+      </motion.div>
     );
   };
 
   return (
-    <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-10">
+    <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-16">
 
       {/* Page Header */}
-      <div className="animate-fade-up">
-        <div className="flex items-center gap-2 mb-3">
-          <LayoutGrid className="w-4 h-4" style={{ color: 'var(--accent-primary)' }} />
-          <span
-            className="text-xs font-bold uppercase tracking-widest"
-            style={{ color: 'var(--accent-primary)' }}
-          >
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center max-w-3xl mx-auto"
+      >
+        <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-lg bg-[var(--glow-primary)] border border-[var(--border-glow)]">
+          <LayoutGrid className="w-4 h-4 text-[var(--accent-primary)]" />
+          <span className="text-xs font-bold uppercase tracking-widest text-[var(--accent-primary)]">
             Modules Dashboard
           </span>
         </div>
-        <h1
-          className="section-heading text-3xl sm:text-4xl mb-2"
-        >
-          All <span className="gradient-text-static">Calculators</span>
+        <h1 className="section-heading text-4xl sm:text-5xl mb-4">
+          All <span className="gradient-text">Calculators</span>
         </h1>
-        <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+        <p className="text-base text-[var(--text-muted)]">
           Choose any module to open its interactive calculator, step-by-step solver, and visualizer.
         </p>
-      </div>
+      </motion.div>
 
       {/* Stats Bar */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 animate-fade-up delay-100">
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+        className="grid grid-cols-2 lg:grid-cols-4 gap-6"
+      >
         {stats.map((s, idx) => (
-          <div key={idx} className="stat-card">
-            <span
-              className="text-xs uppercase tracking-wider font-semibold block mb-2"
-              style={{ color: 'var(--text-faint)' }}
-            >
+          <motion.div variants={itemVariants} key={idx} className="glass-card p-6 text-center group">
+            <span className="text-xs uppercase tracking-wider font-bold block mb-3 text-[var(--text-faint)]">
               {s.label}
             </span>
-            <div
-              className="text-2xl sm:text-3xl font-black mb-0.5"
-              style={{ color: s.color, fontFamily: "'Inter', sans-serif" }}
+            <div 
+              className="text-3xl sm:text-4xl font-black mb-1 transition-transform duration-300 group-hover:scale-110"
+              style={{ color: s.color, textShadow: `0 0 20px ${s.glow}` }}
             >
               {s.value}
             </div>
-            <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
+            <div className="text-xs font-medium text-[var(--text-muted)]">
               {s.detail}
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Filter Tabs */}
-      <div className="flex justify-center animate-fade-up delay-200">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="flex justify-center"
+      >
         <div className="tab-switcher">
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setUnitFilter('all')}
-            className={`tab-item ${unitFilter === 'all' ? 'active' : ''}`}
-            id="filter-all"
+            className={`tab-item relative ${unitFilter === 'all' ? 'text-white' : ''}`}
           >
-            <BookOpen className="inline w-3 h-3 mr-1" />
+            {unitFilter === 'all' && (
+              <motion.div layoutId="filter-pill" className="absolute inset-0 bg-[var(--accent-primary)] rounded-lg shadow-[var(--shadow-glow)] -z-10" />
+            )}
+            <BookOpen className="inline w-4 h-4 mr-2 -mt-0.5" />
             All Modules
-          </button>
-          <button
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setUnitFilter('unit1')}
-            className={`tab-item ${unitFilter === 'unit1' ? 'active' : ''}`}
-            id="filter-unit1"
+            className={`tab-item relative ${unitFilter === 'unit1' ? 'text-white' : ''}`}
           >
+            {unitFilter === 'unit1' && (
+              <motion.div layoutId="filter-pill" className="absolute inset-0 bg-[var(--accent-primary)] rounded-lg shadow-[var(--shadow-glow)] -z-10" />
+            )}
             Unit I
-          </button>
-          <button
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setUnitFilter('unit2')}
-            className={`tab-item ${unitFilter === 'unit2' ? 'active' : ''}`}
-            id="filter-unit2"
+            className={`tab-item relative ${unitFilter === 'unit2' ? 'text-white' : ''}`}
           >
+            {unitFilter === 'unit2' && (
+              <motion.div layoutId="filter-pill" className="absolute inset-0 bg-[var(--accent-primary)] rounded-lg shadow-[var(--shadow-glow)] -z-10" />
+            )}
             Unit II
-          </button>
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
 
       {/* Module Lists */}
-      <div className="space-y-14">
-
-        {/* Unit I */}
-        {(unitFilter === 'all' || unitFilter === 'unit1') && (
-          <div className="space-y-5 animate-fade-up delay-300">
-            <div
-              className="flex items-center gap-4 pb-4"
-              style={{ borderBottom: '1px solid var(--border-default)' }}
+      <div className="space-y-20">
+        <AnimatePresence mode="popLayout">
+          {/* Unit I */}
+          {(unitFilter === 'all' || unitFilter === 'unit1') && (
+            <motion.div 
+              key="unit1"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.4 }}
+              className="space-y-8"
             >
-              <div
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-black text-white"
-                style={{ background: 'var(--accent-primary)' }}
+              <div className="flex items-center gap-4 pb-4 border-b border-[var(--border-default)]">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-black text-white bg-[var(--accent-primary)] shadow-[var(--shadow-glow)]">
+                  I
+                </div>
+                <div>
+                  <h2 className="section-heading text-2xl font-bold text-[var(--text-primary)]">
+                    Number Theory & Complex Numbers
+                  </h2>
+                  <p className="text-sm text-[var(--text-muted)] font-medium">
+                    GCD · Modular Congruence · Complex Arithmetic
+                  </p>
+                </div>
+              </div>
+              <motion.div 
+                variants={containerVariants}
+                initial="hidden"
+                animate="show"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
               >
-                I
-              </div>
-              <div>
-                <h2 className="section-heading text-lg font-bold">
-                  Unit I — Number Theory & Complex Numbers
-                </h2>
-                <p className="text-xs" style={{ color: 'var(--text-faint)' }}>
-                  GCD · Modular Congruence · Complex Arithmetic
-                </p>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {unit1Modules.map(renderModuleCard)}
-            </div>
-          </div>
-        )}
+                {unit1Modules.map(renderModuleCard)}
+              </motion.div>
+            </motion.div>
+          )}
 
-        {/* Unit II */}
-        {(unitFilter === 'all' || unitFilter === 'unit2') && (
-          <div className="space-y-5 animate-fade-up delay-400">
-            <div
-              className="flex items-center gap-4 pb-4"
-              style={{ borderBottom: '1px solid var(--border-default)' }}
+          {/* Unit II */}
+          {(unitFilter === 'all' || unitFilter === 'unit2') && (
+            <motion.div 
+              key="unit2"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.4 }}
+              className="space-y-8"
             >
-              <div
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-black text-white"
-                style={{ background: 'var(--accent-emerald)' }}
+              <div className="flex items-center gap-4 pb-4 border-b border-[var(--border-default)]">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-black text-white bg-[var(--accent-emerald)] shadow-[0_0_20px_var(--glow-emerald)]">
+                  II
+                </div>
+                <div>
+                  <h2 className="section-heading text-2xl font-bold text-[var(--text-primary)]">
+                    Combinatorics & Calculus
+                  </h2>
+                  <p className="text-sm text-[var(--text-muted)] font-medium">
+                    Permutations · Combinations · Limits
+                  </p>
+                </div>
+              </div>
+              <motion.div 
+                variants={containerVariants}
+                initial="hidden"
+                animate="show"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
               >
-                II
-              </div>
-              <div>
-                <h2 className="section-heading text-lg font-bold">
-                  Unit II — Combinatorics & Calculus
-                </h2>
-                <p className="text-xs" style={{ color: 'var(--text-faint)' }}>
-                  Permutations · Combinations · Limits
-                </p>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {unit2Modules.map(renderModuleCard)}
-            </div>
-          </div>
-        )}
+                {unit2Modules.map(renderModuleCard)}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

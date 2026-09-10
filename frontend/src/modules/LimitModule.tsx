@@ -267,7 +267,7 @@ export const LimitModule: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Input Panel */}
-        <div className="lg:col-span-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-5 self-start">
+        <div className="lg:col-span-1 glass-card p-6  space-y-5 self-start">
           <h2 className="text-lg font-bold text-slate-900 dark:text-white">
             Calculator Parameters
           </h2>
@@ -283,7 +283,7 @@ export const LimitModule: React.FC = () => {
                 value={expression}
                 onChange={(e) => setExpression(e.target.value)}
                 placeholder="e.g. (x^2 - 4)/(x - 2)"
-                className="w-full bg-slate-50 dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm font-semibold text-slate-850 dark:text-white focus:outline-none"
+                className="input-glow w-full px-4 py-3 text-sm font-semibold"
               />
             </div>
 
@@ -297,7 +297,7 @@ export const LimitModule: React.FC = () => {
                 value={aPoint}
                 onChange={(e) => setAPoint(e.target.value)}
                 placeholder="e.g. 2"
-                className="w-full bg-slate-50 dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm font-semibold text-slate-850 dark:text-white focus:outline-none"
+                className="input-glow w-full px-4 py-3 text-sm font-semibold"
               />
             </div>
           </div>
@@ -353,7 +353,7 @@ export const LimitModule: React.FC = () => {
         {/* Output Panel / Visualization */}
         <div className="lg:col-span-2 space-y-8">
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start glass-card p-6 sm:p-8 ">
             {/* Left Col: Plot */}
             <div className="space-y-4 flex flex-col w-full">
               <SimulationSegment
@@ -425,7 +425,7 @@ export const LimitModule: React.FC = () => {
           </div>
 
           {response && (
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-8">
+            <div className="glass-card p-6 sm:p-8  space-y-8">
               <SolutionPanel
                 given={`f(x) = ${expression}, \\quad x \\to ${aPoint}`}
                 formula={response.formula}

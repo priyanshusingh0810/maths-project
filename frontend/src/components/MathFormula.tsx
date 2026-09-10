@@ -29,7 +29,7 @@ export const MathFormula: React.FC<MathFormulaProps> = ({ formula, block = false
     <span
       ref={containerRef}
       className={`${className} inline-block select-all`}
-      style={{ color: '#e2e8f0' }}
+      style={{ color: 'var(--text-primary)' }}
     />
   );
 };

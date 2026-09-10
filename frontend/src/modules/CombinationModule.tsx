@@ -189,7 +189,7 @@ export const CombinationModule: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Input Panel */}
-        <div className="lg:col-span-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-6 self-start">
+        <div className="lg:col-span-1 glass-card p-6  space-y-6 self-start">
           <h2 className="text-lg font-bold text-slate-900 dark:text-white">
             Calculator Parameters
           </h2>
@@ -205,7 +205,7 @@ export const CombinationModule: React.FC = () => {
                 value={nStr}
                 onChange={(e) => setNStr(e.target.value)}
                 placeholder="e.g. 5"
-                className="w-full bg-slate-50 dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm font-semibold text-slate-850 dark:text-white placeholder-slate-400 focus:outline-none"
+                className="input-glow w-full px-4 py-3 text-sm font-semibold"
               />
             </div>
 
@@ -219,7 +219,7 @@ export const CombinationModule: React.FC = () => {
                 value={rStr}
                 onChange={(e) => setRStr(e.target.value)}
                 placeholder="e.g. 3"
-                className="w-full bg-slate-50 dark:bg-slate-955 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm font-semibold text-slate-850 dark:text-white placeholder-slate-400 focus:outline-none"
+                className="input-glow w-full px-4 py-3 text-sm font-semibold"
               />
             </div>
           </div>
@@ -243,14 +243,14 @@ export const CombinationModule: React.FC = () => {
             <div className="flex gap-2">
               <button
                 onClick={loadExample}
-                className="flex-1 py-2.5 bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-slate-850 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1 cursor-pointer"
+                className="btn-outline-glow flex-1 flex items-center justify-center gap-1 cursor-pointer py-2"
               >
                 <Play className="w-3 h-3 text-emerald-500 fill-emerald-500" />
                 Try Example
               </button>
               <button
                 onClick={handleReset}
-                className="py-2.5 px-3 bg-white dark:bg-slate-955 border border-slate-200 dark:border-slate-800 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-850 rounded-xl font-semibold text-xs transition-all flex items-center justify-center cursor-pointer"
+                className="btn-outline-glow px-3 py-2 flex items-center justify-center cursor-pointer"
                 title="Reset Inputs"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
@@ -262,10 +262,10 @@ export const CombinationModule: React.FC = () => {
         {/* Output Panel / Visualization */}
         <div className="lg:col-span-2 space-y-8">
           {response ? (
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-8">
+            <div className="glass-card p-6 sm:p-8  space-y-8">
               
               {/* Giant Result Card */}
-              <div className="text-center bg-slate-50 dark:bg-slate-950/40 p-6 rounded-2xl border border-slate-200/60 dark:border-slate-850/60 space-y-2">
+              <div className="text-center glass-card-inner p-6 space-y-2">
                 <span className="text-[10px] font-black uppercase tracking-wider text-slate-500">
                   Total Combinations (nCr)
                 </span>
@@ -294,22 +294,22 @@ export const CombinationModule: React.FC = () => {
                             combinations: fact(n) / (fact(x) * fact(n - x))
                           }));
                         })()}>
-                          <XAxis dataKey="rVal" stroke="#10b981" tick={{ fill: '#10b981' }} />
+                          <XAxis dataKey="rVal" stroke="var(--accent-secondary)" tick={{ fill: 'var(--accent-secondary)' }} />
                           <YAxis 
                             tickFormatter={(value) => value > 10000 ? value.toExponential(1) : value.toString()}
-                            stroke="#10b981" 
-                            tick={{ fill: '#10b981' }} 
+                            stroke="var(--accent-secondary)" 
+                            tick={{ fill: 'var(--accent-secondary)' }} 
                             width={60} 
                           />
                           <Tooltip 
-                            contentStyle={{ backgroundColor: 'rgba(15, 23, 42, 0.9)', borderColor: 'rgba(16, 185, 129, 0.3)', borderRadius: '12px', color: '#fff' }}
-                            itemStyle={{ color: '#a7f3d0' }}
+                            contentStyle={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-default)', borderRadius: '12px', color: 'var(--text-primary)' }}
+                            itemStyle={{ color: 'var(--accent-secondary)' }}
                             formatter={(value: any) => [Number(value).toLocaleString(), 'Combinations (nCr)']}
                             labelFormatter={(label) => `Choosing r = ${label}`}
                           />
                           <Bar 
                             dataKey="combinations" 
-                            fill="#10b981" 
+                            fill="var(--accent-secondary)" 
                             radius={[4, 4, 0, 0]} 
                             animationDuration={1500}
                           >
@@ -317,7 +317,7 @@ export const CombinationModule: React.FC = () => {
                               const n = parseInt(nStr, 10);
                               const targetR = parseInt(rStr, 10);
                               return Array.from({ length: n + 1 }).map((_, index) => (
-                                <Cell key={`cell-${index}`} fill={index === targetR ? '#8b5cf6' : '#10b981'} />
+                                <Cell key={`cell-${index}`} fill={index === targetR ? 'var(--accent-primary)' : 'var(--accent-secondary)'} />
                               ));
                             })()}
                           </Bar>
@@ -343,7 +343,7 @@ export const CombinationModule: React.FC = () => {
               />
 
               {/* Small comparison card */}
-              <div className="bg-slate-50 dark:bg-slate-950/20 p-5 rounded-2xl border border-slate-200/50 dark:border-slate-850/50 space-y-3">
+              <div className="glass-card-inner p-5 space-y-3">
                 <h4 className="font-bold text-slate-850 dark:text-white text-xs flex items-center gap-1">
                   <HelpCircle className="w-4 h-4 text-indigo-500" />
                   Comparison: Permutation vs. Combination
@@ -362,7 +362,7 @@ export const CombinationModule: React.FC = () => {
 
             </div>
           ) : (
-            <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-850 rounded-3xl p-12 text-center text-slate-500 space-y-4">
+            <div className="glass-card p-12 text-center text-slate-500 space-y-4">
               <Layers className="w-16 h-16 text-slate-300 dark:text-slate-700 mx-auto animate-pulse" />
               <h3 className="text-xl font-bold text-slate-900 dark:text-white">
                 No Calculations Evaluated Yet

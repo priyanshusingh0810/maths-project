@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Sigma, Moon, Sun } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '../utils/cn';
 
 interface NavbarProps {
   activePage: string;
@@ -55,192 +57,123 @@ export const Navbar: React.FC<NavbarProps> = ({
     return false;
   };
 
-  const navBg = theme === 'dark'
-    ? scrolled ? 'rgba(10,15,26,0.97)' : 'rgba(10,15,26,0.85)'
-    : scrolled ? 'rgba(255,255,255,0.97)' : 'rgba(255,255,255,0.92)';
-
-  const borderColor = theme === 'dark'
-    ? 'rgba(255,255,255,0.07)'
-    : 'rgba(0,0,0,0.07)';
-
-  const shadowVal = scrolled
-    ? theme === 'dark'
-      ? '0 4px 24px rgba(0,0,0,0.5)'
-      : '0 4px 24px rgba(0,0,0,0.08)'
-    : 'none';
-
   return (
-    <nav
-      className="sticky top-0 z-50 transition-all duration-300"
-      style={{
-        backgroundColor: navBg,
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        borderBottom: `1px solid ${borderColor}`,
-        boxShadow: shadowVal,
-      }}
+    <motion.div
+      className="fixed top-0 left-0 right-0 z-50 flex justify-center mt-6 px-4 pointer-events-none"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-
-          {/* Logo */}
-          <button
-            onClick={() => navigateTo('home')}
-            className="flex items-center gap-3 group cursor-pointer"
-            style={{ background: 'none', border: 'none', padding: 0 }}
-          >
-            <div
-              className="w-8 h-8 rounded-lg flex items-center justify-center"
-              style={{
-                background: 'var(--accent-primary)',
-                boxShadow: '0 2px 8px var(--glow-primary)',
-              }}
-            >
-              <Sigma className="w-4 h-4 text-white" />
-            </div>
-            <div className="text-left">
-              <span
-                className="font-bold tracking-tight text-sm leading-none block"
-                style={{ color: 'var(--text-primary)', fontFamily: "'Inter', sans-serif" }}
-              >
-                Math in Action
-              </span>
-              <span
-                className="text-[10px] font-medium uppercase tracking-widest block mt-0.5"
-                style={{ color: 'var(--text-faint)' }}
-              >
-                Interactive Explorer
-              </span>
-            </div>
-          </button>
-
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-1">
-            {navItems.map((item, idx) => (
-              <button
-                key={idx}
-                onClick={item.action}
-                className="px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-150 cursor-pointer"
-                style={{
-                  color: isActive(item) ? 'var(--accent-primary)' : 'var(--text-muted)',
-                  background: isActive(item) ? 'var(--glow-primary)' : 'transparent',
-                  fontFamily: "'Inter', sans-serif",
-                }}
-                onMouseEnter={e => {
-                  if (!isActive(item)) {
-                    (e.currentTarget as HTMLElement).style.color = 'var(--text-primary)';
-                    (e.currentTarget as HTMLElement).style.background = 'var(--bg-secondary)';
-                  }
-                }}
-                onMouseLeave={e => {
-                  if (!isActive(item)) {
-                    (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)';
-                    (e.currentTarget as HTMLElement).style.background = 'transparent';
-                  }
-                }}
-              >
-                {item.label}
-              </button>
-            ))}
-
-            {/* Divider */}
-            <div
-              className="w-px h-5 mx-2"
-              style={{ background: 'var(--border-default)' }}
-            />
-
-            {/* College Badge */}
-            <span
-              className="px-3 py-1.5 rounded-md text-[10px] font-semibold uppercase tracking-wider hidden lg:block"
-              style={{
-                background: 'var(--bg-secondary)',
-                border: '1px solid var(--border-default)',
-                color: 'var(--text-muted)',
-              }}
-            >
-              T.Y.B.Sc. DS
-            </span>
-
-            {/* Theme Toggle */}
-            {toggleTheme && theme && (
-              <button
-                onClick={toggleTheme}
-                className="ml-1 p-2 rounded-lg transition-all duration-200 cursor-pointer"
-                style={{
-                  color: 'var(--text-muted)',
-                  background: 'transparent',
-                  border: '1px solid var(--border-default)',
-                }}
-                aria-label="Toggle Theme"
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.background = 'var(--bg-secondary)';
-                  (e.currentTarget as HTMLElement).style.color = 'var(--text-primary)';
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.background = 'transparent';
-                  (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)';
-                }}
-              >
-                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-              </button>
-            )}
-          </div>
-
-          {/* Mobile Hamburger */}
-          <div className="md:hidden flex items-center gap-2">
-            {toggleTheme && theme && (
-              <button
-                onClick={toggleTheme}
-                className="p-2 rounded-lg transition-all cursor-pointer"
-                style={{
-                  color: 'var(--text-muted)',
-                  border: '1px solid var(--border-default)',
-                  background: 'transparent',
-                }}
-              >
-                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-              </button>
-            )}
+      <nav
+        className={cn(
+          "pointer-events-auto transition-all duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] rounded-2xl border",
+          scrolled
+            ? "w-full max-w-5xl bg-[var(--bg-surface)] backdrop-blur-xl border-[var(--border-glow)] shadow-[var(--shadow-lg)] shadow-[var(--glow-primary)]"
+            : "w-full max-w-7xl bg-[var(--bg-card)] backdrop-blur-md border-[var(--border-card)] shadow-[var(--shadow-sm)]"
+        )}
+      >
+        <div className="px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            
+            {/* Logo */}
             <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg transition-all cursor-pointer"
-              style={{
-                color: 'var(--text-muted)',
-                background: isOpen ? 'var(--bg-secondary)' : 'transparent',
-                border: '1px solid var(--border-default)',
-              }}
+              onClick={() => navigateTo('home')}
+              className="flex items-center gap-3 group cursor-pointer focus:outline-none"
             >
-              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[var(--accent-primary)] shadow-[0_0_15px_var(--glow-primary)] transition-transform duration-300 group-hover:scale-110">
+                <Sigma className="w-5 h-5 text-white" />
+              </div>
+              <div className="text-left hidden sm:block">
+                <span className="font-bold tracking-tight text-[15px] leading-none block text-[var(--text-primary)] font-sans">
+                  Math Explorer
+                </span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.15em] block mt-0.5 text-[var(--accent-secondary)]">
+                  Interactive
+                </span>
+              </div>
             </button>
+
+            {/* Desktop Nav */}
+            <div className="hidden lg:flex items-center gap-1.5 p-1 rounded-xl bg-[var(--border-subtle)]">
+              {navItems.map((item, idx) => {
+                const active = isActive(item);
+                return (
+                  <button
+                    key={idx}
+                    onClick={item.action}
+                    className="relative px-4 py-2 rounded-lg text-[13px] font-semibold transition-colors duration-200"
+                    style={{
+                      color: active ? 'var(--text-primary)' : 'var(--text-muted)',
+                    }}
+                  >
+                    {active && (
+                      <motion.div
+                        layoutId="nav-pill"
+                        className="absolute inset-0 bg-[var(--bg-card)] rounded-lg shadow-[var(--shadow-sm)] border border-[var(--border-card)]"
+                        transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                      />
+                    )}
+                    <span className="relative z-10">{item.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Right Side Tools */}
+            <div className="flex items-center gap-3">
+              <span className="px-3 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider hidden md:block border border-[var(--border-default)] text-[var(--text-muted)]">
+                T.Y.B.Sc. DS
+              </span>
+
+              {toggleTheme && theme && (
+                <button
+                  onClick={toggleTheme}
+                  className="p-2.5 rounded-xl border border-[var(--border-default)] text-[var(--text-muted)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-glow)] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]"
+                >
+                  {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                </button>
+              )}
+
+              {/* Mobile Hamburger */}
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="lg:hidden p-2.5 rounded-xl border border-[var(--border-default)] text-[var(--text-muted)] hover:bg-[var(--bg-secondary)] transition-all focus:outline-none"
+              >
+                {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div
-          className="md:hidden px-4 pt-1 pb-4 space-y-1"
-          style={{
-            borderTop: `1px solid var(--border-default)`,
-            background: navBg,
-            backdropFilter: 'blur(20px)',
-          }}
-        >
-          {navItems.map((item, idx) => (
-            <button
-              key={idx}
-              onClick={item.action}
-              className="block w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer"
-              style={{
-                color: isActive(item) ? 'var(--accent-primary)' : 'var(--text-secondary)',
-                background: isActive(item) ? 'var(--glow-primary)' : 'transparent',
-              }}
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="lg:hidden overflow-hidden border-t border-[var(--border-default)]"
             >
-              {item.label}
-            </button>
-          ))}
-        </div>
-      )}
-    </nav>
+              <div className="px-4 py-4 space-y-1">
+                {navItems.map((item, idx) => (
+                  <button
+                    key={idx}
+                    onClick={item.action}
+                    className={cn(
+                      "block w-full text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all",
+                      isActive(item)
+                        ? "bg-[var(--glow-primary)] text-[var(--accent-primary)] border border-[var(--border-glow)]"
+                        : "text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)]"
+                    )}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+    </motion.div>
   );
 };

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { Home } from './pages/Home';
@@ -6,6 +7,7 @@ import { ModulesDashboard } from './pages/ModulesDashboard';
 import { Concepts } from './pages/Concepts';
 import { Help } from './pages/Help';
 import { SimulationsPage } from './pages/SimulationsPage';
+import { ParticlesBackground } from './components/ParticlesBackground';
 
 // Mathematical Modules
 import { GCDModule } from './modules/GCDModule';
@@ -18,7 +20,6 @@ import { LimitModule } from './modules/LimitModule';
 function App() {
   const [activePage, setActivePage] = useState<string>('home');
   const [unitFilter, setUnitFilter] = useState<'all' | 'unit1' | 'unit2'>('all');
-  const [pageKey, setPageKey] = useState(0);
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     return (localStorage.getItem('theme') as 'dark' | 'light') || 'dark';
   });
@@ -50,15 +51,11 @@ function App() {
 
   // Scroll to top & trigger page animation on navigation
   const navigateTo = (page: string) => {
-    setActivePage(page);
-    setPageKey(k => k + 1);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (page !== activePage) {
+      setActivePage(page);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
-
-  // Scroll to top of the page when navigating to a new tab/module
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [activePage]);
 
   // Page switcher mapping
   const renderActivePage = () => {
@@ -97,10 +94,9 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen relative" style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
-      {/* Animated background layers */}
-      <div className="bg-orbs" aria-hidden="true" />
-      <div className="bg-grid" aria-hidden="true" />
+    <div className="flex flex-col min-h-screen relative font-sans text-[color:var(--text-primary)]" style={{ backgroundColor: 'var(--bg-primary)' }}>
+      {/* Animated background layer */}
+      <ParticlesBackground />
 
       <Navbar 
         activePage={activePage} 
@@ -111,10 +107,18 @@ function App() {
       />
 
       {/* Main page content container */}
-      <main className="flex-grow pb-16 relative z-10">
-        <div key={pageKey} className="animate-fade-up">
-          {renderActivePage()}
-        </div>
+      <main className="flex-grow pt-24 pb-16 relative z-10">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activePage}
+            initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {renderActivePage()}
+          </motion.div>
+        </AnimatePresence>
       </main>
 
       {/* Persistent footer */}
